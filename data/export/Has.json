@@ -1,0 +1,1 @@
+{"list":[{"id":"138","type":"relationship","label":"Has","properties":{"date":"31.10.1999","assessment":"5","teach_id":294},"start":{"id":"295","labels":["Person","Student"]},"end":{"id":"297","labels":["Lesson"]}}]}

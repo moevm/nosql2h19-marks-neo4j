@@ -1,17 +1,64 @@
 const express = require("express");
+const multer  = require("multer");
+var   fs      = require("fs");
+
 const router  = express.Router();
-var fs = require("fs");
+
 
 router.use("/public", express.static('public'));
 
 
-//Базовая адресация:
-{
+{//Начало дороги на экспорт/импорт
+	const db     = require("./db");
+	const upload = multer({dest:"data"});
+	
+	//"Пожалуйста, снеси базу к чертям и установи вот это"
+	router.post("/upload", upload.single("filedata"), function (req, res, next) {
+		let filedata = req.file;
+		
+		if(!filedata)
+			res.send("Ошибка при загрузке файла");
+		else
+			fs.rename(`./data/${filedata.filename}`, './data/import.json', function(err) {
+				if ( err ) 
+					console.log('ERROR: ' + err);
+				else
+					db.doImport(res);
+		});
+	});
+	
+	
+	//"Э, Слышь! Бэкап есть? А если найду?"
+	router.post("/download", (req,res)=>{
+		db.doExport(res);
+	});
+}
+
+
+{//Отдать Болту присланный юзверем файл на растерзание
+	//Отправлет файл import.json
+	router.get("/import", (req,res)=>{
+		fs.readFile('./data/test.json', function(error, data){   
+			if(error){
+				res.statusCode = 404;
+				res.end("Resourse not found!");
+			}   
+			else{
+				res.end(data);
+			}
+		});
+	});
+}
+
+
+{//Базовая адресация:
 	//Открытие начальной страницы
 	router.get("/", (req, res) => {
 		res.sendFile("main.html", {root: "public/html"});
+		//res.render('main');
 	});
 	
+
 	//Открытие стрицы а-ля ":3000/`page`"
 	router.get("/:name", (req, res) => {
 		fs.access(__dirname+`/../public/html/${req.params.name}.html`, (error)=>{
@@ -60,10 +107,6 @@ router.put("/ajax", (req,res)=>{
 	
 	res.status(200);
 });
-
-
-
-
 
 
 

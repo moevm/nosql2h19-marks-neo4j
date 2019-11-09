@@ -1,0 +1,1 @@
+{"list":[{"id":"137","type":"relationship","label":"Works","start":{"id":"294","labels":["Person","Student","Teacher"]},"end":{"id":"296","labels":["Kafedra"]}},{"id":"136","type":"relationship","label":"Works","start":{"id":"298","labels":["Person","Teacher"]},"end":{"id":"296","labels":["Kafedra"]}}]}

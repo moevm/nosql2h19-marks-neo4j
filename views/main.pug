@@ -9,10 +9,11 @@ html
 	body
 
 		h1 TEST ACCESS TO DB_NEO4j
-		input(type="text" id="txt")
-		button(onclick="test()") Click
-		br
-		br
-		p(id="retTXT")
+
+		form(method="post" enctype="multipart/form-data")
+			input( type="text" name="field1")
+			input( type="file" name="my_file")
+			input( type="text" name="field2")
+			button(type="submit") Send
 		
 		

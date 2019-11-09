@@ -1,19 +1,18 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-  <head>
-      <title>TestSite</title>
-      <meta charset="utf-8" />
-	  
-	  <script src="/public/scripts/jquery.js"></script>
-	  <script src="/public/scripts/ajax.js"></script>
-	  <script src="/public/scripts/main.js"></script>
-  </head>
-  <body>
-      <h1>Главная страница</h1>
-      <input type="text" id="txt">
-	  <button onclick="test()"> Click </button>
-	  <br></br>
-	  <br></br>
-	  <div id="retTable"></div>
-  </body>
-<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Приветствие</title>
+ </head>
+ <body>  
+  <p>Пример создания формы для импорта БД</p>
+  <form action="/upload" enctype="multipart/form-data" method="post" accept=".json">
+   <p>Загрузите json-файл БД</p>
+   <p><input type="file" name="filedata"></p>
+   <p><input type="submit">Импорт</p>
+  </form>
+  <form action="/download" method="post">
+   <p><input type="submit">Экспорт</p>
+  </form>
+ </body>
+</html>
