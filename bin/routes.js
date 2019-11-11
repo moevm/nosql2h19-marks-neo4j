@@ -38,7 +38,7 @@ router.use("/public", express.static('public'));
 {//Отдать Болту присланный юзверем файл на растерзание
 	//Отправлет файл import.json
 	router.get("/import", (req,res)=>{
-		fs.readFile('./data/test.json', function(error, data){   
+		fs.readFile('./data/import.json', function(error, data){   
 			if(error){
 				res.statusCode = 404;
 				res.end("Resourse not found!");
