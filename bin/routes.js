@@ -59,7 +59,10 @@ router.use("/public", express.static('public'));
 	// 		<..Обработка запроса и иногда - посылка ответа..>
 	// });
 	
-	
+	router.post("/test", (req, res) =>{
+		console.log(req.body);
+		res.status(200);
+	});
 }
 
 
@@ -76,13 +79,18 @@ router.use("/public", express.static('public'));
 	});
 	
 	
-	
+	//Шаблоны
 	////////////////////////////////////////////////////////////////////////////////
 	//\\\\\\\ Фиксированный набор адресов (для шаблонов с определёнными параметрами)
 	
 	// Шаблон:
 	// router.get("/<name>", (req, res) =>{
 	// 		res.render("<name>", {<json-object>});
+	// });
+	
+	// Пример:
+	// router.get("/example", (req, res) =>{
+	// 		res.render("example", {name: "Fox", age: 19});
 	// });
 	
 	//\\\\\\\
