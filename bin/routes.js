@@ -51,6 +51,23 @@ router.use("/public", express.static('public'));
 }
 
 
+
+
+{//Обработчики запросов клиентов
+	// Шаблон:
+	// router.<type>("/<name>", (req, res) =>{
+	// 		<..Обработка запроса и иногда - посылка ответа..>
+	// });
+	
+	
+}
+
+
+
+
+
+
+
 {//Базовая адресация:
 	//Открытие начальной страницы
 	router.get("/", (req, res) => {
@@ -58,17 +75,41 @@ router.use("/public", express.static('public'));
 		//res.render('main');
 	});
 	
-
+	
+	
+	////////////////////////////////////////////////////////////////////////////////
+	//\\\\\\\ Фиксированный набор адресов (для шаблонов с определёнными параметрами)
+	
+	// Шаблон:
+	// router.get("/<name>", (req, res) =>{
+	// 		res.render("<name>", {<json-object>});
+	// });
+	
+	//\\\\\\\
+	///////////
+	
+	
+	///////////////////////////////////////////////////////////////////////////////////////
+	//\\\\\\\ Для всего остального - ищем pug или html страницу с соответствующим названием
 	//Открытие стрицы а-ля ":3000/`page`"
 	router.get("/:name", (req, res) => {
-		fs.access(__dirname+`/../public/html/${req.params.name}.html`, (error)=>{
+		//Есть ли такой pug
+		fs.access(__dirname+`/../views/${req.params.name}.pug`, (error)=>{
 		if (error) {
-			res.status(404);
-			res.end("Resourse not found!");
+			//Pug нет, но есть ли такой html-ник
+			fs.access(__dirname+`/../public/html/${req.params.name}.html`, (error)=>{
+			if (error) {
+				res.status(404);
+				res.end("Resourse not found!");
+			} else {
+				res.sendFile(req.params.name+".html", {root: "public/html"});
+			}});
 		} else {
-			res.sendFile(req.params.name+".html", {root: "public/html"});
+			res.render(req.params.name);
 		}});
 	});
+	
+	
 	//Открытие стрицы а-ля ":3000/`path`/`page`"
 	router.get("/:path/:name", (req, res) => {
 		fs.access(__dirname+`/../public/html/${req.params.path}/${req.params.name}.html`, (error)=>{
@@ -79,7 +120,14 @@ router.use("/public", express.static('public'));
 			res.sendFile(`/${req.params.path}/${req.params.name}.html`, {root: "public/html"});
 		}});
 	});
+	//\\\\\\\
+	///////////
 }
+
+
+
+
+
 
 //Пока-что у нас всего 1 способ отправить запрос на БД: скомпоновать на клиенте
 // а затем - через сервер к БД
