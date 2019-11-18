@@ -18,6 +18,20 @@ class Requests{
 	}
 	
 	
+	/////////////////////////////////////////////////////
+	//В данное мето необходимо помещать отправку запроса:
+	test(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) return F.name, N.name, G.num, S.Lastname, S.Firstname;`,
+			res,
+			func
+		);
+	}
+	
+	
+	//////////////////////////////////////////////////
+	///////////V/u/l/p/i/s///m/a/g/i/c////////////////
+	//////////////////////////////////////////////////
 	//"Берёшь запрос и посылаешь Болту. В случае чего
 	//   пни Функа - он будет знать что делать с результатом"
 	doRequest(request, res, func=this.standartFinal){
@@ -36,6 +50,7 @@ class Requests{
 		  func(res, result);
 		});
 	}
+	
 	
 	
 	//Затычка на "выполнил запрос - изволь доложить клиенту"

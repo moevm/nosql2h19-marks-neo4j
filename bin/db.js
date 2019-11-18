@@ -5,24 +5,50 @@ var rq = require("./requests");
 //  чаще всего)
 // Прослойка между сервером и 
 class Data{
-	doResponse(request, res, func=(result, res)=>{}){
-		const neo4j = require('neo4j-driver').v1;
-
-		const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "12345"));
-		const session = driver.session();
-
-		const resultPromise = session.run(
-			request
+	//Для каждого запроса создаётся doЗапрос и иногда (в случае использования в запросе id(), count()...) parseЗапрос
+	
+	
+	doTest(res, params, end){
+		rq.test(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
 		);
-
-		resultPromise.then(result => {
-		  session.close();
-		  driver.close();
-		  func(result, res);
-		});
+	}
+	
+	
+	
+	
+	//Классический переводчик "ответ neo4j -> json"
+	parseClassic(result){
+		let ret = [];
+		for (let i in result.records)
+			ret.push(result.records[i]._fields);
+		return ret;
 	}
 
+	// Пример распарсивания запроса MATCH (n) return n.name, id(n):
+	/*
+	parseQQQ(result){
+		let ret = [];
+		for (let i in result.records){
+			// Разница только в аргументе для ret.push
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1].low //Для всяких id(), cost(), avg()... в запросе
+				]
+			);
+		}
+	}
+	*/
 
+	////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////
+	////////////Без спец знаний и умений - не лезть!!!//////////
+	////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////
+	
 	//"А ну быстро взял присланый файл и перекрасил Базу в него"
 	doImport(res){
 		rq.cleanDB(res, (res)=>{
@@ -31,9 +57,6 @@ class Data{
 		);
 	}
 	
-
-
-
 	//Штука для создания бекапа данных (и дальнейшего посыла клиенту по-умолчанию)
 	doExport(res, func = this.sendExportFile){
 		let flag = [0];
@@ -68,5 +91,6 @@ class Data{
 		res.download(file);
 	}
 };
+
 
 module.exports = new Data();

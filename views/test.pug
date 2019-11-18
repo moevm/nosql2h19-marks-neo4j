@@ -1,0 +1,23 @@
+html
+	head
+		meta(charset="utf-8")
+		script(type="text/javascript" src="/public/scripts/jquery.js")
+		script(type="text/javascript" src="/public/scripts/ajax.js")
+		script(type="text/javascript" src="/public/scripts/test.js")
+		title Тест
+	body
+		h1 Тестовая страница со списком студентов
+		
+		table
+			thead
+				td Факультет
+				td Направление
+				td Группа
+				td Студент
+			tbody
+				for str in strs
+					tr
+						td #{str[0]}
+						td #{str[1]}
+						td #{str[2]}
+						td #{str[3]} #{str[4]}

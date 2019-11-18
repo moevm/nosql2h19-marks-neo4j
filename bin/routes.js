@@ -1,7 +1,7 @@
 const express = require("express");
 const multer  = require("multer");
 var   fs      = require("fs");
-
+const db     = require("./db");
 const router  = express.Router();
 
 
@@ -9,7 +9,7 @@ router.use("/public", express.static('public'));
 
 
 {//Начало дороги на экспорт/импорт
-	const db     = require("./db");
+	
 	const upload = multer({dest:"data"});
 	
 	//"Пожалуйста, снеси базу к чертям и установи вот это"
@@ -56,15 +56,15 @@ router.use("/public", express.static('public'));
 {//Обработчики запросов клиентов
 	// Шаблон:
 	// router.<type>("/<name>", (req, res) =>{
-	// 		<..Обработка запроса и иногда - посылка ответа..>
+	// 		db.do<Name>(res, req.body, <func>);
 	// });
 	
 	router.post("/test", (req, res) =>{
-		console.log(req.body);
-		res.status(200);
+		db.doTest(res, req.body, classicEnd);
 	});
+	
+	classicEnd = (res,answer)=>{res.json(answer); res.status(200);};
 }
-
 
 
 
@@ -92,6 +92,10 @@ router.use("/public", express.static('public'));
 	// router.get("/example", (req, res) =>{
 	// 		res.render("example", {name: "Fox", age: 19});
 	// });
+	
+	router.get("/test", (req, res) =>{
+		db.doTest(res, req.body, (res, ans)=>{res.render("test",{strs: ans});});
+	});
 	
 	//\\\\\\\
 	///////////
@@ -128,42 +132,7 @@ router.use("/public", express.static('public'));
 			res.sendFile(`/${req.params.path}/${req.params.name}.html`, {root: "public/html"});
 		}});
 	});
-	//\\\\\\\
-	///////////
 }
-
-
-
-
-
-
-//Пока-что у нас всего 1 способ отправить запрос на БД: скомпоновать на клиенте
-// а затем - через сервер к БД
-// Чуть позже (когда определимся со всеми запросами) будем отправлять только необходимые параметры,
-// а создаваться запрос будет на сервере
-router.put("/ajax", (req,res)=>{
-	//console.log(req.body.req);	
-	const neo4j = require('neo4j-driver').v1;
-
-	const driver = neo4j.driver("bolt://localhost:7687", neo4j.auth.basic("neo4j", "12345"));
-	const session = driver.session();
-
-	const resultPromise = session.run(
-	  req.body.req
-	);
-
- 	resultPromise.then(result => {
-	  session.close();
-	  
-	  res.json(result);
-
-	  // on application exit:
-	  driver.close();
-	});
-	
-	res.status(200);
-});
-
 
 
 module.exports = router;
