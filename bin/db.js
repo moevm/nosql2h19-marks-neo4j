@@ -51,9 +51,24 @@ class Data{
 	
 	//"А ну быстро взял присланый файл и перекрасил Базу в него"
 	doImport(res){
-		rq.cleanDB(res, (res)=>{
-			rq.doImport(res,(res)=>{
-				rq.remCrutchID(res)})}
+		//Делаем бэкап
+		this.doExport(res, (res)=>{
+			let exportJSON = readExportFiles();
+			
+			let date = new Date();
+			let name = `${date.getFullYear()}y_${date.getMonth()}m_${date.getDate()}d_${date.getHours()}h_${date.getMinutes()}m_${date.getSeconds()}s`
+			fs.writeFile(`./data/backups/${name}.json`, JSON.stringify(exportJSON), (err) => {
+				if(err) throw err;
+			});
+			
+			//затем очищаем базу
+			rq.cleanDB(res, (res)=>{
+				//импортируем из файла
+				rq.doImport(res,(res)=>{
+					//очищаем "левые" идишники
+					rq.remCrutchID(res)})}
+				);
+			}
 		);
 	}
 	
@@ -64,6 +79,8 @@ class Data{
 		rq.backupRelSh(res, (re)=>{this.createExportFile(flag, re, func)});
 	}
 	
+
+	
 	//Создаём бэк-ап файл
 	createExportFile(flag, res, nextStep=this.sendExportFile){
 		flag[0]++;
@@ -71,26 +88,45 @@ class Data{
 		////////////////////////
 		///////////////////////
 		
-		let exportJSON = {nodes: {}, relationship:{}};
-		
-		for(let i=0;i<7;i++)
-			exportJSON.nodes[rq.labels[i]] = require(`./../data/export/${rq.labels[i]}.json`).list
-		for(let i=7;i<11;i++)
-			exportJSON.relationship[rq.labels[i]] = require(`./../data/export/${rq.labels[i]}.json`).list
-		
-		fs.writeFileSync("./data/export.json", JSON.stringify(exportJSON), (err) => {
-			if(err) throw err;
-		});
-		
 		nextStep(res);
 	}
 
 	//Отправляем клиенту
 	sendExportFile(res){
+		
+		//Код, отвечающий за запись в файлы
+		let exportJSON = readExportFiles();
+		
+		
+		fs.writeFileSync("./data/export.json", JSON.stringify(exportJSON), (err) => {
+			if(err) throw err;
+		});
+		
+		
+		let date = new Date();
+		let name = `${date.getFullYear()}y_${date.getMonth()}m_${date.getDate()}d_${date.getHours()}h_${date.getMinutes()}m_${date.getSeconds()}s`
+		fs.writeFile(`./data/backups/${name}.json`, JSON.stringify(exportJSON), (err) => {
+			if(err) throw err;
+		});
+
+
 		let file = `${__dirname}/../data/export.json`;
 		res.download(file);
 	}
+	
+	
+
 };
 
+//Собираем JSON из экспортированных файлов
+function readExportFiles(){
+	let exportJSON = {nodes: {}, relationship:{}};
+	
+	for(let i=0;i<7;i++)
+		exportJSON.nodes       [rq.labels[i]] = JSON.parse(fs.readFileSync(`./data/export/${rq.labels[i]}.json`)).list;
+	for(let i=7;i<11;i++)
+		exportJSON.relationship[rq.labels[i]] = JSON.parse(fs.readFileSync(`./data/export/${rq.labels[i]}.json`)).list;
+	return exportJSON;
+}
 
 module.exports = new Data();

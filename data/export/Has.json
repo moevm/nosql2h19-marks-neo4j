@@ -1,1 +1,1 @@
-{"list":[{"id":"8","type":"relationship","label":"Has","properties":{"date":"31.10.1999","assessment":"5","teach_id":9},"start":{"id":"5","labels":["Person","Student"]},"end":{"id":"7","labels":["Lesson"]}}]}
+{"list":[{"id":"545","type":"relationship","label":"Has","properties":{"date":"31.10.1999","assessment":"5","teach_id":311},"start":{"id":"307","labels":["Person","Student"]},"end":{"id":"309","labels":["Lesson"]}}]}
