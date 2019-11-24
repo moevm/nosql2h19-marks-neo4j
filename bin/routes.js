@@ -96,7 +96,21 @@ router.use("/public", express.static('public'));
 	router.get("/test", (req, res) =>{
 		db.doTest(res, req.body, (res, ans)=>{res.render("test",{strs: ans});});
 	});
-	
+	router.get("/2", (req, res) =>{
+		db.doTest(res, req.body, (res, ans)=>{res.render("2",{strs: ans});});
+	});
+	router.get("/3", (req, res) =>{
+		db.doTest(res, req.body, (res, ans)=>{res.render("3",{strs: ans});});
+	});
+	router.get("/4", (req, res) =>{
+		db.doTest(res, req.body, (res, ans)=>{res.render("4",{strs: ans});});
+	});
+	router.get("/5", (req, res) =>{
+		db.doTest(res, req.body, (res, ans)=>{res.render("5",{strs: ans});});
+	});
+	router.get("/6", (req, res) =>{
+		db.doTest(res, req.body, (res, ans)=>{res.render("6",{strs: ans});});
+	});
 	//\\\\\\\
 	///////////
 	

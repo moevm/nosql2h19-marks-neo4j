@@ -1,0 +1,38 @@
+html
+	head
+		meta(charset="utf-8")
+
+		title TestSite
+		
+		script(src="/public/scripts/jquery.js")
+		script(src="/public/scripts/main.js")
+	body
+		table
+			thead
+				td Факультет
+				td Направление
+				td Группа
+				td № студенческого
+				td ФИО
+			tbody
+				for str in strs
+					tr
+						td #{str[0]}
+						td #{str[1]}
+						td #{str[2]}
+						td #{str[3]}
+						
+		a(href="http://localhost:3000/5")
+			button(align="center") На стр.студента
+			p
+		input( type="text" id="Fak")
+		input( type="text" id="Napr")
+		input( type="text" id="Group")
+		input( type="text" id="Studak")
+		input( type="text" id="FIO")
+		button(align="center") Добавить
+		button(align="center") Удалить
+		p
+		a(href="http://localhost:3000/main")
+			button(align="center") На гл.страницу
+			

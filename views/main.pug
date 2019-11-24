@@ -8,12 +8,26 @@ html
 		script(src="/public/scripts/main.js")
 	body
 
-		h1 TEST ACCESS TO DB_NEO4j
+		h1(align="center")  СПбГЭТУ "ЛЭТИ"
 
 		form(method="post" enctype="multipart/form-data")
 			input( type="text" name="field1")
 			input( type="file" name="my_file")
 			input( type="text" name="field2")
 			button(type="submit") Send
+		h1(align="center" '\n') Информация о студентах 
+		p
+		a(href="http://localhost:3000/2")
+			button(align="center") Выбрать
+		h1(align="center") Информация о преподавателях и предметах 
+		p
+		a(href="http://localhost:3000/3")
+			button(align="center") Выбрать
+		h1(align="center") Запросы
+		p
+		a(href="http://localhost:3000/4")
+			button(align="center") Выбрать
+			
+			
 		
 		

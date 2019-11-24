@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>TestSite</title>
+      <meta charset="utf-8" />
+	  
+	  <script src="/public/scripts/jquery.js"></script>
+	  <script src="/public/scripts/ajax.js"></script>
+	  <script src="/public/scripts/main.js"></script>
+	   <style>
+   ul.hr {
+    margin: 0; /* Обнуляем значение отступов */
+    padding: 200px; /* Значение полей */
+   }
+   ul.hr li {
+    display: inline; /* Отображать как строчный элемент */
+    margin-right: 75px; /* Отступ слева */
+    border: 1px solid #000; /* Рамка вокруг текста */
+    padding: 5px; /* Поля вокруг текста */
+   }
+  </style>
+  </head>
+  <body>
+  <br></br>
+	  <br></br>
+	  <table width="500" border="1" align="left" cellpadding="9" cellspacing="0">
+  <colgroup>
+    <col span="3" style="background:LightBlue"><!-- С помощью этой конструкции задаем цвет фона для первых двух столбцов таблицы-->
+    <col style="background-color:below"><!-- Задаем цвет фона для следующего (одного) столбца таблицы-->
+	<col style="background-color:below">
+	<col style="background-color:below">
+	<col style="background-color:below">
+  </colgroup>
+  <tr>
+    <th>Факультет <select >
+	 <option ></option>
+       <option  >ФКТИ</option>
+       <option  >ФРТ</option>
+       <option  >ФЭА</option>
+       <option >ФЭЛ</option>
+	   <option >ФЭМ</option>
+		<option >ФИБС</option>
+		<option >ГФ</option>
+   </select></th>
+    <th>Направление <select >
+	 <option ></option>
+       <option  >ФКТИ</option>
+       <option  >ФРТ</option>
+       <option  >ФЭА</option>
+       <option >ФЭЛ</option>
+	   <option >ФЭМ</option>
+		<option >ФИБС</option>
+		<option >ГФ</option>
+   </select></th>
+    <th>Группа <select >
+	 <option ></option>
+       <option  >ФКТИ</option>
+       <option  >ФРТ</option>
+       <option  >ФЭА</option>
+       <option >ФЭЛ</option>
+	   <option >ФЭМ</option>
+		<option >ФИБС</option>
+		<option >ГФ</option>
+   </select></th>
+	 <th>№ студенческого </th>
+	  <th>ФИО студента</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td><td>
+    <td></td>
+	 <td></td>
+	  <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><td>
+    <td></td>
+	 <td></td>
+	  <td></td>
+  </tr>
+</table>
+	<ul class="hr">
+   <li> Факультет</li>
+   <li> Направление</li>
+   <li>Группа</li>
+   <li> № студенческого</li>
+   <li>ФИО</li>
+  </ul>
+		  
+      <input type="text" id="txt">
+      <input type="text" id="txt">
+	  <input type="text" id="txt">
+	  <input type="text" id="txt">
+	  <input type="text" id="txt">
+	  
+	  <button align="right" onclick="test()"> Удалить </button>
+	  <button align="right" onclick="test()"> Добавить </button>
+	  <br></br>
+	  <br></br>
+	   <button align="right" onclick="window.location='file:///C:/Users/Angelina/Desktop/%D0%A1%D0%A3%D0%91%D0%94/nosql2h19-marks-neo4j/public/html/1.html'"> на гл.страницу </button>
+	
+  </body>
+<html>
