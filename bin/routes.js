@@ -63,6 +63,36 @@ router.use("/public", express.static('public'));
 		db.doTest(res, req.body, classicEnd);
 	});
 	
+	
+	router.post("/addStudent", (req, res) => {
+		db.doAddStudent(res, req.body, (res, answer)=>{
+			db.do2(res, req.body, classicEnd);
+		})
+	});
+
+	router.post("/delStudent", (req, res) => {
+		db.doDelStudent(res, req.body, (res, answer)=>{
+			db.do2(res, req.body, classicEnd);
+		})
+	});
+
+	router.post("/addTeacher", (req, res) => {
+		db.doAddTeacher(res, req.body, (res, answer)=>{
+			db.do3(res, req.body, classicEnd);
+		})
+	});
+
+	router.post("/delTeacher", (req, res) => {
+		db.doDelTeacher(res, req.body, (res, answer)=>{
+			db.do3(res, req.body, classicEnd);
+		})
+	});
+	
+	
+	router.post("/getAssessmets", (req, res) =>{
+		db.doGetAssessmets(res, req.body, classicEnd);
+	});
+	
 	classicEnd = (res,answer)=>{res.json(answer); res.status(200);};
 }
 
@@ -97,19 +127,15 @@ router.use("/public", express.static('public'));
 		db.doTest(res, req.body, (res, ans)=>{res.render("test",{strs: ans});});
 	});
 	router.get("/2", (req, res) =>{
-		db.doTest(res, req.body, (res, ans)=>{res.render("2",{strs: ans});});
+		db.do2(res, req.body, (res, ans)=>{res.render("2",{strs: ans});});
 	});
 	router.get("/3", (req, res) =>{
-		db.doTest(res, req.body, (res, ans)=>{res.render("3",{strs: ans});});
+		db.do3(res, req.body, (res, ans)=>{res.render("3",{strs: ans});});
 	});
-	router.get("/4", (req, res) =>{
-		db.doTest(res, req.body, (res, ans)=>{res.render("4",{strs: ans});});
-	});
-	router.get("/5", (req, res) =>{
-		db.doTest(res, req.body, (res, ans)=>{res.render("5",{strs: ans});});
-	});
-	router.get("/6", (req, res) =>{
-		db.doTest(res, req.body, (res, ans)=>{res.render("6",{strs: ans});});
+
+
+	router.get("/5/:id", (req, res) => {
+		db.do5(res, {id: req.params.id}, (res, ans)=>{res.render("5", {std: ans[0]});});
 	});
 	//\\\\\\\
 	///////////
