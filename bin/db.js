@@ -146,6 +146,51 @@ class Data{
 	}
 
 
+	doFilterFacultet(res, params, end){
+		rq.filterFacultet(
+			res,
+			(res, result)=>{end(res, this.parse2(result));},
+			params
+		);
+	}
+	doFilterNapravlenie(res, params, end){
+		rq.filterNapravlenie(
+			res,
+			(res, result)=>{end(res, this.parse2(result));},
+			params
+		);
+	}
+	doFilterGroup(res, params, end){
+		rq.filterGroup(
+			res,
+			(res, result)=>{end(res, this.parse2(result));},
+			params
+		);
+	}
+	
+	
+	////Ср. оценка на факультете за период
+	doAvgAssessmentPerFacultetFromDate(res, params, end){
+		rq.avgAssessmentPerFacultetFromDate(
+			res,
+			(res, result)=>{end(res, this.parseAvgAssessmentPerFacultetFromDate(result));},
+			params
+		);
+	}
+	
+	parseAvgAssessmentPerFacultetFromDate(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0].low,
+					result.records[i]._fields[1]
+				]
+			);
+		}
+		return ret;
+	}
+
 	// Пример распарсивания запроса MATCH (n) return n.name, id(n):
 	/*
 	parseQQQ(result){

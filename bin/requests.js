@@ -89,10 +89,58 @@ class Requests{
 		);
 	}
 	
+	
+	//Фильтры для студентов
+	filterFacultet(res, func = this.standartFinal, params = {}){
+		
+		let list = `"${params.name[0]}"`
+		for (let i =1; i< params.name.length;i++)
+			list += `,"${params.name[i]}"`
+		
+		this.doRequest(
+			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) WHERE F.name in [${list}] return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
+			res,
+			func
+		);
+	}
+	filterNapravlenie(res, func = this.standartFinal, params = {}){
+		let list = `"${params.name[0]}"`
+		for (let i =1; i< params.name.length;i++)
+			list += `,"${params.name[i]}"`
+		this.doRequest(
+			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) WHERE N.name in [${list}] return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
+			res,
+			func
+		);
+	}
+	filterGroup(res, func = this.standartFinal, params = {}){
+		let list = `"${params.num[0]}"`
+		for (let i =1; i< params.num.length;i++)
+			list += `,"${params.num[i]}"`
+		this.doRequest(
+			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) WHERE G.num in [${list}] return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
+			res,
+			func
+		);
+	}
+	
 	//Получить все оценки студента (id)
 	getAssessmets(res, func = this.standartFinal, params = {}){
 		this.doRequest(
 			`MATCH (S:Student)-[H]-(L:Lesson) WHERE id(S)=${params.id} OPTIONAL MATCH (T:Teacher) WHERE id(T)=H.teach_id RETURN L.name, T.Lastname, T.Firstname, H.assessment, H.date;`,
+			res,
+			func
+		);
+	}
+	
+	
+	
+	//Ср. оценка на факультете за период
+	avgAssessmentPerFacultetFromDate(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (F:Facultet{name:"${params.name}"})--()--()--()-[h:Has]-() \
+			WHERE toInt(split(h.date,'.')[2])>=${params.at} AND toInt(split(h.date,'.')[2])<=${params.from} \
+			RETURN toInt(split(h.date,'.')[2]), avg(toInt(h.assessment));`,
 			res,
 			func
 		);

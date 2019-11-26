@@ -64,24 +64,24 @@ router.use("/public", express.static('public'));
 	});
 	
 	
+	//Зачислить/отчислить студента
 	router.post("/addStudent", (req, res) => {
 		db.doAddStudent(res, req.body, (res, answer)=>{
 			db.do2(res, req.body, classicEnd);
 		})
 	});
-
 	router.post("/delStudent", (req, res) => {
 		db.doDelStudent(res, req.body, (res, answer)=>{
 			db.do2(res, req.body, classicEnd);
 		})
 	});
-
+	
+	//Призвать/изгнать препода
 	router.post("/addTeacher", (req, res) => {
 		db.doAddTeacher(res, req.body, (res, answer)=>{
 			db.do3(res, req.body, classicEnd);
 		})
 	});
-
 	router.post("/delTeacher", (req, res) => {
 		db.doDelTeacher(res, req.body, (res, answer)=>{
 			db.do3(res, req.body, classicEnd);
@@ -89,8 +89,28 @@ router.use("/public", express.static('public'));
 	});
 	
 	
+	//Запрос на получение оценок студента
 	router.post("/getAssessmets", (req, res) =>{
 		db.doGetAssessmets(res, req.body, classicEnd);
+	});
+	
+	
+	
+	//Вызов фильтров  (особенность - на вход - ["..",...".."], даже для единственного элемента)
+	router.post("/filterFacultet", (req,res)=>{
+		db.doFilterFacultet(res, req.body, classicEnd);
+	});
+	router.post("/filterNapravlenie", (req, res)=>{
+		db.doFilterNapravlenie(res, req.body, classicEnd);
+	});
+	router.post("/filterGroup", (req, res)=>{
+		db.doFilterGroup(res, req.body, classicEnd);
+	});
+	
+	
+	//Ср. оценка на факультете за период
+	router.post("/avgAssessmentPerFacultetFromDate", (req, res)=>{
+		db.doAvgAssessmentPerFacultetFromDate(res, req.body, classicEnd);
 	});
 	
 	classicEnd = (res,answer)=>{res.json(answer); res.status(200);};
