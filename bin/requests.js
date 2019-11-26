@@ -90,40 +90,50 @@ class Requests{
 	}
 	
 	
-	//Фильтры для студентов
-	filterFacultet(res, func = this.standartFinal, params = {}){
+	//Фильтры для студентов	
+	getFilter(res, func = this.standartFinal, params = {}){
 		
-		let list = `"${params.name[0]}"`
-		for (let i =1; i< params.name.length;i++)
-			list += `,"${params.name[i]}"`
+		let facultet = `"${params.facultet[0]}"`
+		for (let i =1; i< params.facultet.length;i++)
+			facultet += `,"${params.facultet[i]}"`;
+		
+		let napravlenie = `"${params.napravlenie[0]}"`;
+		for (let i =1; i< params.napravlenie.length;i++)
+			napravlenie += `,"${params.napravlenie[i]}"`;
+		
+		let group = `"${params.group[0]}"`
+		for (let i =1; i< params.group.length;i++)
+			group += `,"${params.group[i]}"`;
 		
 		this.doRequest(
-			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) WHERE F.name in [${list}] return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
+			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) \
+				WHERE F.name in [${facultet}] AND N.name in [${napravlenie}] AND G.num in [${group}]\
+				return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
 			res,
 			func
 		);
 	}
-	filterNapravlenie(res, func = this.standartFinal, params = {}){
-		let list = `"${params.name[0]}"`
-		for (let i =1; i< params.name.length;i++)
-			list += `,"${params.name[i]}"`
+	getFacultet(res, func = this.standartFinal, params = {}){
 		this.doRequest(
-			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) WHERE N.name in [${list}] return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
+			`MATCH (F:Facultet) return F.name`,
 			res,
 			func
 		);
 	}
-	filterGroup(res, func = this.standartFinal, params = {}){
-		let list = `"${params.num[0]}"`
-		for (let i =1; i< params.num.length;i++)
-			list += `,"${params.num[i]}"`
+	getNapravlenie(res, func = this.standartFinal, params = {}){
 		this.doRequest(
-			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) WHERE G.num in [${list}] return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
+			`MATCH (F:Napravlenie) return F.name`,
 			res,
 			func
 		);
 	}
-	
+	getGroup(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (F:Group) return F.num`,
+			res,
+			func
+		);
+	}
 	//Получить все оценки студента (id)
 	getAssessmets(res, func = this.standartFinal, params = {}){
 		this.doRequest(
@@ -140,7 +150,7 @@ class Requests{
 		this.doRequest(
 			`MATCH (F:Facultet{name:"${params.name}"})--()--()--()-[h:Has]-() \
 			WHERE toInt(split(h.date,'.')[2])>=${params.at} AND toInt(split(h.date,'.')[2])<=${params.from} \
-			RETURN toInt(split(h.date,'.')[2]), avg(toInt(h.assessment));`,
+			RETURN toInt(split(h.date,'.')[2]) AS Date, avg(toInt(h.assessment)) ORDER BY Date;`,
 			res,
 			func
 		);

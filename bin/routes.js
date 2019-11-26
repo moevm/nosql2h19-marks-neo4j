@@ -96,16 +96,20 @@ router.use("/public", express.static('public'));
 	
 	
 	
-	//Вызов фильтров  (особенность - на вход - ["..",...".."], даже для единственного элемента)
-	router.post("/filterFacultet", (req,res)=>{
-		db.doFilterFacultet(res, req.body, classicEnd);
+	//Вызов фильтров
+	router.post("/getFilter", (req, res)=>{
+		db.doGetFilter(res, req.body, classicEnd);
 	});
-	router.post("/filterNapravlenie", (req, res)=>{
-		db.doFilterNapravlenie(res, req.body, classicEnd);
+	router.post("/getFacultet", (req, res)=>{
+		db.doGetFacultet(res, req.body, classicEnd);
 	});
-	router.post("/filterGroup", (req, res)=>{
-		db.doFilterGroup(res, req.body, classicEnd);
+	router.post("/getNapravlenie", (req, res)=>{
+		db.doGetNapravlenie(res, req.body, classicEnd);
 	});
+	router.post("/getGroup", (req, res)=>{
+		db.doGetGroup(res, req.body, classicEnd);
+	});
+	
 	
 	
 	//Ср. оценка на факультете за период
@@ -156,6 +160,10 @@ router.use("/public", express.static('public'));
 
 	router.get("/5/:id", (req, res) => {
 		db.do5(res, {id: req.params.id}, (res, ans)=>{res.render("5", {std: ans[0]});});
+	});
+	
+	router.get("/6", (req, res) => {
+		db.doGetFacultet(res, {id: req.params.id}, (res, ans)=>{res.render("6", {facultet: ans});});
 	});
 	//\\\\\\\
 	///////////

@@ -146,28 +146,37 @@ class Data{
 	}
 
 
-	doFilterFacultet(res, params, end){
-		rq.filterFacultet(
-			res,
-			(res, result)=>{end(res, this.parse2(result));},
-			params
-		);
-	}
-	doFilterNapravlenie(res, params, end){
-		rq.filterNapravlenie(
-			res,
-			(res, result)=>{end(res, this.parse2(result));},
-			params
-		);
-	}
-	doFilterGroup(res, params, end){
-		rq.filterGroup(
-			res,
-			(res, result)=>{end(res, this.parse2(result));},
-			params
-		);
-	}
+
 	
+	//Запросы для фильтров
+	doGetFilter(res, params, end){
+		rq.getFilter(
+			res,
+			(res, result)=>{end(res, this.parse2(result));},
+			params
+		);
+	}
+	doGetFacultet(res, params, end){
+		rq.getFacultet(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
+	doGetNapravlenie(res, params, end){
+		rq.getNapravlenie(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
+	doGetGroup(res, params, end){
+		rq.getGroup(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
 	
 	////Ср. оценка на факультете за период
 	doAvgAssessmentPerFacultetFromDate(res, params, end){
