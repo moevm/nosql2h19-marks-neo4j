@@ -5,31 +5,44 @@ html
 		title TestSite
 		
 		script(src="/public/scripts/jquery.js")
-		script(src="/public/scripts/main.js")
+		script(src="/public/scripts/ajax.js")
+		script(src="/public/scripts/5.js")
 	body
-		table
+		p(id="id" style="display: none") #{std[5]}
+		
+		
+		h1 Студент
+		h2 #{std[3]} #{std[4]}
+		p Группа: #{std[2]}
+		p Направление: #{std[1]}
+		p Факультет: #{std[0]}
+		
+		p Успеваемость:
+		table(style="border: solid 1px" )
 			thead
 				td Предмет
 				td Преподаватель
 				td Оценка
 				td Дата сдачи
-			tbody
-				for str in strs
-					tr
-						td #{str[0]}
-						td #{str[1]}
-						td #{str[2]}
-						td #{str[3]}
+			tbody(id="ocenki")
+				
+				
+					
 						
 						
-		input( type="text" id="Predmet")
-		input( type="text" id="Prepod")
-		input( type="text" id="Ocenka")
-		input( type="text" id="date")
-		button(align="center") Изменить
+		//input(type="text" id="Predmet")
+		//input(type="text" id="Prepod")
+		//input(type="text" id="Ocenka")
+		//input(type="text" id="date")
+		//button(align="center") Изменить
 		
 		p
 		a(href="http://localhost:3000/main")
 			button(align="center") На гл.страницу
 			a(href="http://localhost:3000/2")
 				button(align="center") Назад
+				
+script.
+	$( document ).ready(function() {
+		getAssessmets();
+	});

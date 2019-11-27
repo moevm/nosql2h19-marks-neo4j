@@ -5,19 +5,24 @@ html
 		title TestSite
 		
 		script(src="/public/scripts/jquery.js")
-		script(src="/public/scripts/main.js")
+		script(src="/public/scripts/ajax.js")
+		script(src="/public/scripts/6.js")
+		script(src="/public/scripts/anychart.js")
 	body
 		h1(align="center")  Средняя оценка на 
-			input( type="text" id="Kaf")
+			select(id="Fac")
+				for fac in facultet
+					option(value=fac[0]  ) #{fac}
 		h1(align="center")  в разные года с 
-			input( type="text" id="Year")
+			input( type="number" id="at" value="2010")
 		h1(align="center")   по
-			input( type="text" id="Year")
+			input( type="number" id="from" value="2030")
 		p
-		button() Запрос
+		button(onclick="getRequest()") Запрос
 		
+		div(id="container" style="width: 400; height: 400")
 
-
+		
 
 		p
 		a(href="http://localhost:3000/main")

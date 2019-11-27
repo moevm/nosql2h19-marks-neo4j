@@ -5,27 +5,48 @@ html
 		title TestSite
 		
 		script(src="/public/scripts/jquery.js")
-		script(src="/public/scripts/main.js")
+		script(src="/public/scripts/ajax.js")
+		script(src="/public/scripts/3.js")
 	body
-		table
+		h1 Преподы
+		table(style="border: solid 1px" )
 			thead
 				td Кафедра
-				td Преподаватель
-				td Предмет
-			tbody
+				td Фамилия Имя
+				td 
+			tbody(id="teachers")
 				for str in strs
 					tr
 						td #{str[0]}
-						td #{str[1]}
-						td #{str[2]}
-						
-						
-		input( type="text" id="Kaf")
-		input( type="text" id="Prepod")
-		input( type="text" id="Predmet")
-		button(align="center") Добавить
-		button(align="center") Удалить
-		button(align="center") Изменить
+						td
+							a(onclick="alert(" + str[3] + ")") #{str[1]} #{str[2]}
+						td
+							buton(class="deletor" style="color: red; display:none" onclick="delTeacher(" + str[3] + ")") (╬◣﹏◢)
+					
+	
+		br
+		table
+			thead
+				td Кафедра
+				td Фамилия
+				td Имя
+				td Телефон
+				td Город
+			tbody
+				td
+					input( type="text" id="num")
+				td
+					input( type="text" id="Firstname")
+				td
+					input( type="text" id="Lastname")
+				td
+					input( type="text" id="telephone")
+				td
+					input( type="text" id="Sity")
+					
+		button(align="center" onclick="addTeacher()") Добавить
+		//button(align="center") Удалить
+		//button(align="center") Изменить
 		p
 		a(href="http://localhost:3000/main")
 			button(align="center") На гл.страницу

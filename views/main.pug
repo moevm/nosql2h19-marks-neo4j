@@ -10,11 +10,18 @@ html
 
 		h1(align="center")  СПбГЭТУ "ЛЭТИ"
 
-		form(method="post" enctype="multipart/form-data")
-			input( type="text" name="field1")
-			input( type="file" name="my_file")
-			input( type="text" name="field2")
-			button(type="submit") Send
+		form(action="/upload" enctype="multipart/form-data" method="post" accept=".json")
+			p Загрузите json-файл БД
+			p
+				input(type="file" name="filedata")
+			p
+				input(type="submit")
+		
+		
+		form(action="/download" method="post")
+			p
+				input(type="submit")
+		
 		h1(align="center" '\n') Информация о студентах 
 		p
 		a(href="http://localhost:3000/2")
