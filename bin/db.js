@@ -17,13 +17,186 @@ class Data{
 	}
 	
 	
-	
+	// Набор "Факультет-Направление-Группа-Студент"
+	do2(res, params, end){
+			rq._2(
+			res,
+			(res, result)=>{end(res, this.parse2(result));},
+			params
+		);
+	}
+	parse2(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1],
+					result.records[i]._fields[2],
+					result.records[i]._fields[3],
+					result.records[i]._fields[4],
+					result.records[i]._fields[5].low,
+				]
+			);
+		}
+		return ret;
+	}
+
+	// Набор "Кафедра-Препод"
+	do3(res, params, end){
+		rq._3(
+			res,
+			(res, result)=>{end(res, this.parse3(result));},
+			params
+		);
+	}
+	parse3(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1],
+					result.records[i]._fields[2],
+					result.records[i]._fields[3].low
+				]
+			);
+		}
+		return ret;
+	}
+
+
+	// Набор "Факультет-Направление-Группа-Студент"
+	do5(res, params, end){
+			rq._5(
+			res,
+			(res, result)=>{end(res, this.parse5(result));},
+			params
+		);
+	}
+	parse5(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1],
+					result.records[i]._fields[2],
+					result.records[i]._fields[3],
+					result.records[i]._fields[4],
+					result.records[i]._fields[5].low,
+				]
+			);
+		}
+		return ret;
+	}
+
+	//Запрос "добавление студента"
+	doAddStudent(res, params, end){
+		rq.addStudent(
+			res,
+			end,
+			params
+		);
+	}
+
+	//Запрос "удаление студента"
+	doDelStudent(res, params, end){
+		rq.delStudent(
+			res,
+			end,
+			params
+		);
+	}
+
+
+	//Запрос "добавление препода"
+	doAddTeacher(res, params, end){
+		rq.addTeacher(
+			res,
+			end,
+			params
+		);
+	}
+
+	//Запрос "удаление препода"
+	doDelTeacher(res, params, end){
+		rq.delTeacher(
+			res,
+			end,
+			params
+		);
+	}
 	
 	//Классический переводчик "ответ neo4j -> json"
 	parseClassic(result){
 		let ret = [];
 		for (let i in result.records)
 			ret.push(result.records[i]._fields);
+		return ret;
+	}
+
+
+	doGetAssessmets(res, params, end){
+		rq.getAssessmets(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
+
+
+
+	
+	//Запросы для фильтров
+	doGetFilter(res, params, end){
+		rq.getFilter(
+			res,
+			(res, result)=>{end(res, this.parse2(result));},
+			params
+		);
+	}
+	doGetFacultet(res, params, end){
+		rq.getFacultet(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
+	doGetNapravlenie(res, params, end){
+		rq.getNapravlenie(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
+	doGetGroup(res, params, end){
+		rq.getGroup(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
+	
+	////Ср. оценка на факультете за период
+	doAvgAssessmentPerFacultetFromDate(res, params, end){
+		rq.avgAssessmentPerFacultetFromDate(
+			res,
+			(res, result)=>{end(res, this.parseAvgAssessmentPerFacultetFromDate(result));},
+			params
+		);
+	}
+	
+	parseAvgAssessmentPerFacultetFromDate(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0].low,
+					result.records[i]._fields[1]
+				]
+			);
+		}
 		return ret;
 	}
 

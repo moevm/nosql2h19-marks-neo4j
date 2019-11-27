@@ -29,6 +29,133 @@ class Requests{
 	}
 	
 	
+	_2(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
+			res,
+			func
+		);
+	}
+
+	_3(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`match (K:Kafedra)--(T:Teacher) return K.name, T.Lastname, T.Firstname, id(T);`,
+			res,
+			func
+		);
+	}
+
+	_5(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) WHERE id(S)=${params.id} return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
+			res,
+			func
+		);
+	}
+
+	//Добавить студента
+	addStudent(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (G:Group{num:"${params.num}"}) CREATE (:Person:Student{Lastname:"${params.Lastname}",Firstname:"${params.Firstname}",telephone:"${params.telephone}",Sity:"${params.Sity}"})-[:At]->(G);`,
+			res,
+			func
+		);
+	}
+
+	//Удалить студента
+	delStudent(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (S:Student) WHERE id(S)=${params.id} OPTIONAL MATCH (S)-[r]-() DELETE S,r;`,
+			res,
+			func
+		);
+	}
+
+	//Добавить препода
+	addTeacher(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (K:Kafedra{name:"${params.name}"}) CREATE (:Person:Teacher{Lastname:"${params.Lastname}",Firstname:"${params.Firstname}",telephone:"${params.telephone}",Sity:"${params.Sity}"})-[:Work]->(K);`,
+			res,
+			func
+		);
+	}
+
+	//Удалить препода
+	delTeacher(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (S:Teacher) WHERE id(S)=${params.id} OPTIONAL MATCH (S)-[r]-() DELETE S,r;`,
+			res,
+			func
+		);
+	}
+	
+	
+	//Фильтры для студентов	
+	getFilter(res, func = this.standartFinal, params = {}){
+		
+		let facultet = `"${params.facultet[0]}"`
+		for (let i =1; i< params.facultet.length;i++)
+			facultet += `,"${params.facultet[i]}"`;
+		
+		let napravlenie = `"${params.napravlenie[0]}"`;
+		for (let i =1; i< params.napravlenie.length;i++)
+			napravlenie += `,"${params.napravlenie[i]}"`;
+		
+		let group = `"${params.group[0]}"`
+		for (let i =1; i< params.group.length;i++)
+			group += `,"${params.group[i]}"`;
+		
+		this.doRequest(
+			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) \
+				WHERE F.name in [${facultet}] AND N.name in [${napravlenie}] AND G.num in [${group}]\
+				return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
+			res,
+			func
+		);
+	}
+	getFacultet(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (F:Facultet) return F.name`,
+			res,
+			func
+		);
+	}
+	getNapravlenie(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (F:Napravlenie) return F.name`,
+			res,
+			func
+		);
+	}
+	getGroup(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (F:Group) return F.num`,
+			res,
+			func
+		);
+	}
+	//Получить все оценки студента (id)
+	getAssessmets(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (S:Student)-[H]-(L:Lesson) WHERE id(S)=${params.id} OPTIONAL MATCH (T:Teacher) WHERE id(T)=H.teach_id RETURN L.name, T.Lastname, T.Firstname, H.assessment, H.date;`,
+			res,
+			func
+		);
+	}
+	
+	
+	
+	//Ср. оценка на факультете за период
+	avgAssessmentPerFacultetFromDate(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (F:Facultet{name:"${params.name}"})--()--()--()-[h:Has]-() \
+			WHERE toInt(split(h.date,'.')[2])>=${params.at} AND toInt(split(h.date,'.')[2])<=${params.from} \
+			RETURN toInt(split(h.date,'.')[2]) AS Date, avg(toInt(h.assessment)) ORDER BY Date;`,
+			res,
+			func
+		);
+	}
+	
 	//////////////////////////////////////////////////
 	///////////V/u/l/p/i/s///m/a/g/i/c////////////////
 	//////////////////////////////////////////////////

@@ -63,6 +63,60 @@ router.use("/public", express.static('public'));
 		db.doTest(res, req.body, classicEnd);
 	});
 	
+	
+	//Зачислить/отчислить студента
+	router.post("/addStudent", (req, res) => {
+		db.doAddStudent(res, req.body, (res, answer)=>{
+			db.do2(res, req.body, classicEnd);
+		})
+	});
+	router.post("/delStudent", (req, res) => {
+		db.doDelStudent(res, req.body, (res, answer)=>{
+			db.do2(res, req.body, classicEnd);
+		})
+	});
+	
+	//Призвать/изгнать препода
+	router.post("/addTeacher", (req, res) => {
+		db.doAddTeacher(res, req.body, (res, answer)=>{
+			db.do3(res, req.body, classicEnd);
+		})
+	});
+	router.post("/delTeacher", (req, res) => {
+		db.doDelTeacher(res, req.body, (res, answer)=>{
+			db.do3(res, req.body, classicEnd);
+		})
+	});
+	
+	
+	//Запрос на получение оценок студента
+	router.post("/getAssessmets", (req, res) =>{
+		db.doGetAssessmets(res, req.body, classicEnd);
+	});
+	
+	
+	
+	//Вызов фильтров
+	router.post("/getFilter", (req, res)=>{
+		db.doGetFilter(res, req.body, classicEnd);
+	});
+	router.post("/getFacultet", (req, res)=>{
+		db.doGetFacultet(res, req.body, classicEnd);
+	});
+	router.post("/getNapravlenie", (req, res)=>{
+		db.doGetNapravlenie(res, req.body, classicEnd);
+	});
+	router.post("/getGroup", (req, res)=>{
+		db.doGetGroup(res, req.body, classicEnd);
+	});
+	
+	
+	
+	//Ср. оценка на факультете за период
+	router.post("/avgAssessmentPerFacultetFromDate", (req, res)=>{
+		db.doAvgAssessmentPerFacultetFromDate(res, req.body, classicEnd);
+	});
+	
 	classicEnd = (res,answer)=>{res.json(answer); res.status(200);};
 }
 
@@ -97,19 +151,19 @@ router.use("/public", express.static('public'));
 		db.doTest(res, req.body, (res, ans)=>{res.render("test",{strs: ans});});
 	});
 	router.get("/2", (req, res) =>{
-		db.doTest(res, req.body, (res, ans)=>{res.render("2",{strs: ans});});
+		db.do2(res, req.body, (res, ans)=>{res.render("2",{strs: ans});});
 	});
 	router.get("/3", (req, res) =>{
-		db.doTest(res, req.body, (res, ans)=>{res.render("3",{strs: ans});});
+		db.do3(res, req.body, (res, ans)=>{res.render("3",{strs: ans});});
 	});
-	router.get("/4", (req, res) =>{
-		db.doTest(res, req.body, (res, ans)=>{res.render("4",{strs: ans});});
+
+
+	router.get("/5/:id", (req, res) => {
+		db.do5(res, {id: req.params.id}, (res, ans)=>{res.render("5", {std: ans[0]});});
 	});
-	router.get("/5", (req, res) =>{
-		db.doTest(res, req.body, (res, ans)=>{res.render("5",{strs: ans});});
-	});
-	router.get("/6", (req, res) =>{
-		db.doTest(res, req.body, (res, ans)=>{res.render("6",{strs: ans});});
+	
+	router.get("/6", (req, res) => {
+		db.doGetFacultet(res, {id: req.params.id}, (res, ans)=>{res.render("6", {facultet: ans});});
 	});
 	//\\\\\\\
 	///////////
