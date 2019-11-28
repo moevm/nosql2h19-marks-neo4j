@@ -128,8 +128,8 @@ router.use("/public", express.static('public'));
 {//Базовая адресация:
 	//Открытие начальной страницы
 	router.get("/", (req, res) => {
-		res.sendFile("main.html", {root: "public/html"});
-		//res.render('main');
+		//res.sendFile("main.html", {root: "public/html"});
+		res.render('main');
 	});
 	
 	
