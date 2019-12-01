@@ -2,7 +2,7 @@ var fs = require("fs");
 
 class Requests{
 	constructor(){
-		this.labels= [
+		/*this.labels= [
 			"Facultet", 
 			"Napravlenie",
 			"Group",
@@ -15,6 +15,8 @@ class Requests{
 			"Has",
 			"Works"
 		];
+		this.kolNodes = 7;
+		this.kolRels  = 4;*/
 	}
 	
 	
@@ -233,6 +235,22 @@ class Requests{
 			);
 	}
 
+
+	getLabels(res, func = this.standartFinal){
+		this.doRequest(
+			'match (n) return distinct labels(n);',
+			res,
+			func
+		);
+	}
+	
+	getRelationships(res, func = this.standartFinal){
+		this.doRequest(
+			'match ()-[r]-() return distinct type(r);',
+			res,
+			func
+		);
+	}
 };
 
 module.exports = new Requests();

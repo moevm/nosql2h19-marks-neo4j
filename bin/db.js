@@ -246,7 +246,7 @@ class Data{
 	}
 	
 	//Штука для создания бекапа данных (и дальнейшего посыла клиенту по-умолчанию)
-	doExport(res, func = this.sendExportFile){
+	_doExport(res, func = this.sendExportFile){
 		let flag = [0];
 		rq.backupNodes(res, (re)=>{this.createExportFile(flag, re, func)});
 		rq.backupRelSh(res, (re)=>{this.createExportFile(flag, re, func)});
@@ -288,7 +288,65 @@ class Data{
 	}
 	
 	
-
+	constructor(){
+		this.doExport = this._doExport0;
+	}
+	
+	_doExport0(res, func = this.sendExportFile){
+		let flag = [0];
+		rq.getLabels       (res, (re,result)=>{this.getLabelsParser       (flag, re, result, func)});
+		rq.getRelationships(res, (re,result)=>{this.getRelationshipsParser(flag, re, result, func)});
+	}
+	
+	getLabelsParser(flag, res, result, end){
+		let nodes = [];
+		
+		for (let i in result.records){
+			if (result.records[i]._fields.length == 1)
+				nodes.push(
+						result.records[i]._fields[0][0]
+				);
+			else
+				nodes.push(
+						result.records[i]._fields[0][1]
+				);
+		}
+		flag.nodes = nodes;
+		this._endFirstExport(flag,res,end);
+	}
+	
+	getRelationshipsParser(flag, res, result, end){
+		let relationships = [];
+		
+		for (let i in result.records){
+				relationships.push(
+						result.records[i]._fields[0]
+				);
+		}
+		flag.relationships = relationships;
+		this._endFirstExport(flag,res,end);
+	}
+	
+	_endFirstExport(flag, res, func=this.sendExportFile){
+		flag[0]++;
+		if (flag[0]!=2) return;
+		////////////////////////
+		///////////////////////
+		let labels = [];
+		for(let i in flag.nodes)
+			labels.push(flag.nodes[i]);
+		let kolNodes = flag.nodes.length;
+		for(let i in flag.relationships)
+			labels.push(flag.relationships[i]);
+		let kolRels = flag.relationships.length;
+		
+		rq.labels = labels;
+		rq.kolNodes = kolNodes;
+		rq.kolRels = kolRels;
+		
+		this.doExport = this._doExport;
+		this.doExport(res, func);
+	}
 };
 
 //Собираем JSON из экспортированных файлов
