@@ -30,7 +30,8 @@ class Requests{
 		);
 	}
 	
-	
+/////////////
+//Страница 2
 	_2(res, func = this.standartFinal, params = {}){
 		this.doRequest(
 			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
@@ -38,23 +39,6 @@ class Requests{
 			func
 		);
 	}
-
-	_3(res, func = this.standartFinal, params = {}){
-		this.doRequest(
-			`match (K:Kafedra)--(T:Teacher) return K.name, T.Lastname, T.Firstname, id(T);`,
-			res,
-			func
-		);
-	}
-
-	_5(res, func = this.standartFinal, params = {}){
-		this.doRequest(
-			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) WHERE id(S)=${params.id} return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
-			res,
-			func
-		);
-	}
-
 	//Добавить студента
 	addStudent(res, func = this.standartFinal, params = {}){
 		this.doRequest(
@@ -63,7 +47,6 @@ class Requests{
 			func
 		);
 	}
-
 	//Удалить студента
 	delStudent(res, func = this.standartFinal, params = {}){
 		this.doRequest(
@@ -72,26 +55,6 @@ class Requests{
 			func
 		);
 	}
-
-	//Добавить препода
-	addTeacher(res, func = this.standartFinal, params = {}){
-		this.doRequest(
-			`MATCH (K:Kafedra{name:"${params.name}"}) CREATE (:Person:Teacher{Lastname:"${params.Lastname}",Firstname:"${params.Firstname}",telephone:"${params.telephone}",Sity:"${params.Sity}"})-[:Work]->(K);`,
-			res,
-			func
-		);
-	}
-
-	//Удалить препода
-	delTeacher(res, func = this.standartFinal, params = {}){
-		this.doRequest(
-			`MATCH (S:Teacher) WHERE id(S)=${params.id} OPTIONAL MATCH (S)-[r]-() DELETE S,r;`,
-			res,
-			func
-		);
-	}
-	
-	
 	//Фильтры для студентов	
 	getFilter(res, func = this.standartFinal, params = {}){
 		
@@ -136,6 +99,44 @@ class Requests{
 			func
 		);
 	}
+	
+	
+////////////
+//Страница 3
+	_3(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`match (K:Kafedra)--(T:Teacher) return K.name, T.Lastname, T.Firstname, id(T);`,
+			res,
+			func
+		);
+	}
+	//Добавить препода
+	addTeacher(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (K:Kafedra{name:"${params.name}"}) CREATE (:Person:Teacher{Lastname:"${params.Lastname}",Firstname:"${params.Firstname}",telephone:"${params.telephone}",Sity:"${params.Sity}"})-[:Work]->(K);`,
+			res,
+			func
+		);
+	}
+	//Удалить препода
+	delTeacher(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (S:Teacher) WHERE id(S)=${params.id} OPTIONAL MATCH (S)-[r]-() DELETE S,r;`,
+			res,
+			func
+		);
+	}
+	
+	
+////////////
+//Страница 5
+	_5(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`match (F:Facultet)--(N:Napravlenie)--(G:Group)--(S:Student) WHERE id(S)=${params.id} return F.name, N.name, G.num, S.Lastname, S.Firstname, id(S);`,
+			res,
+			func
+		);
+	}
 	//Получить все оценки студента (id)
 	getAssessmets(res, func = this.standartFinal, params = {}){
 		this.doRequest(
@@ -145,8 +146,9 @@ class Requests{
 		);
 	}
 	
-	
-	
+
+////////////
+//Страница 6
 	//Ср. оценка на факультете за период
 	avgAssessmentPerFacultetFromDate(res, func = this.standartFinal, params = {}){
 		this.doRequest(
@@ -219,7 +221,7 @@ class Requests{
 
 	//Набор запросов для экспорта
 	backupNodes(res, func = this.standartFinal){
-		for (let i=0;i<7;i++)
+		for (let i=0;i<this.kolNodes;i++)
 			this.doRequest(
 				`CALL apoc.export.json.query('Match (n:${this.labels[i]}) return COLLECT(n) as list','${this.labels[i]}.json');`,
 				res,
@@ -227,7 +229,7 @@ class Requests{
 			);
 	}
 	backupRelSh(res, func = this.standartFinal){
-		for (let i=7;i<11;i++)
+		for (let i=this.kolNodes;i<this.kolNodes+this.kolRels;i++)
 			this.doRequest(
 				`CALL apoc.export.json.query('Match ()-[r:${this.labels[i]}]->() return COLLECT(r) as list','${this.labels[i]}.json');`,
 				res,

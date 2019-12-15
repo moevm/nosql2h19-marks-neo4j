@@ -16,7 +16,8 @@ class Data{
 		);
 	}
 	
-	
+////////////
+//Страница 2
 	// Набор "Факультет-Направление-Группа-Студент"
 	do2(res, params, end){
 			rq._2(
@@ -41,56 +42,6 @@ class Data{
 		}
 		return ret;
 	}
-
-	// Набор "Кафедра-Препод"
-	do3(res, params, end){
-		rq._3(
-			res,
-			(res, result)=>{end(res, this.parse3(result));},
-			params
-		);
-	}
-	parse3(result){
-		let ret = [];
-		for (let i in result.records){
-			ret.push(
-				[
-					result.records[i]._fields[0],
-					result.records[i]._fields[1],
-					result.records[i]._fields[2],
-					result.records[i]._fields[3].low
-				]
-			);
-		}
-		return ret;
-	}
-
-
-	// Набор "Факультет-Направление-Группа-Студент"
-	do5(res, params, end){
-			rq._5(
-			res,
-			(res, result)=>{end(res, this.parse5(result));},
-			params
-		);
-	}
-	parse5(result){
-		let ret = [];
-		for (let i in result.records){
-			ret.push(
-				[
-					result.records[i]._fields[0],
-					result.records[i]._fields[1],
-					result.records[i]._fields[2],
-					result.records[i]._fields[3],
-					result.records[i]._fields[4],
-					result.records[i]._fields[5].low,
-				]
-			);
-		}
-		return ret;
-	}
-
 	//Запрос "добавление студента"
 	doAddStudent(res, params, end){
 		rq.addStudent(
@@ -99,7 +50,6 @@ class Data{
 			params
 		);
 	}
-
 	//Запрос "удаление студента"
 	doDelStudent(res, params, end){
 		rq.delStudent(
@@ -108,46 +58,6 @@ class Data{
 			params
 		);
 	}
-
-
-	//Запрос "добавление препода"
-	doAddTeacher(res, params, end){
-		rq.addTeacher(
-			res,
-			end,
-			params
-		);
-	}
-
-	//Запрос "удаление препода"
-	doDelTeacher(res, params, end){
-		rq.delTeacher(
-			res,
-			end,
-			params
-		);
-	}
-	
-	//Классический переводчик "ответ neo4j -> json"
-	parseClassic(result){
-		let ret = [];
-		for (let i in result.records)
-			ret.push(result.records[i]._fields);
-		return ret;
-	}
-
-
-	doGetAssessmets(res, params, end){
-		rq.getAssessmets(
-			res,
-			(res, result)=>{end(res, this.parseClassic(result));},
-			params
-		);
-	}
-
-
-
-	
 	//Запросы для фильтров
 	doGetFilter(res, params, end){
 		rq.getFilter(
@@ -177,7 +87,87 @@ class Data{
 			params
 		);
 	}
+
+
+////////////
+//Страница 3
+	// Набор "Кафедра-Препод"
+	do3(res, params, end){
+		rq._3(
+			res,
+			(res, result)=>{end(res, this.parse3(result));},
+			params
+		);
+	}
+	parse3(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1],
+					result.records[i]._fields[2],
+					result.records[i]._fields[3].low
+				]
+			);
+		}
+		return ret;
+	}
+	//Запрос "добавление препода"
+	doAddTeacher(res, params, end){
+		rq.addTeacher(
+			res,
+			end,
+			params
+		);
+	}
+	//Запрос "удаление препода"
+	doDelTeacher(res, params, end){
+		rq.delTeacher(
+			res,
+			end,
+			params
+		);
+	}
+
+
+////////////
+//Страница 5
+	// Набор "Факультет-Направление-Группа-Студент"
+	do5(res, params, end){
+			rq._5(
+			res,
+			(res, result)=>{end(res, this.parse5(result));},
+			params
+		);
+	}
+	parse5(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1],
+					result.records[i]._fields[2],
+					result.records[i]._fields[3],
+					result.records[i]._fields[4],
+					result.records[i]._fields[5].low,
+				]
+			);
+		}
+		return ret;
+	}
+	doGetAssessmets(res, params, end){
+		rq.getAssessmets(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
 	
+
+////////////
+//Страница 6
 	////Ср. оценка на факультете за период
 	doAvgAssessmentPerFacultetFromDate(res, params, end){
 		rq.avgAssessmentPerFacultetFromDate(
@@ -186,7 +176,6 @@ class Data{
 			params
 		);
 	}
-	
 	parseAvgAssessmentPerFacultetFromDate(result){
 		let ret = [];
 		for (let i in result.records){
@@ -199,6 +188,18 @@ class Data{
 		}
 		return ret;
 	}
+	
+	
+	
+	//Классический переводчик "ответ neo4j -> json"
+	parseClassic(result){
+		let ret = [];
+		for (let i in result.records)
+			ret.push(result.records[i]._fields);
+		return ret;
+	}
+
+
 
 	// Пример распарсивания запроса MATCH (n) return n.name, id(n):
 	/*
@@ -353,9 +354,9 @@ class Data{
 function readExportFiles(){
 	let exportJSON = {nodes: {}, relationship:{}};
 	
-	for(let i=0;i<7;i++)
+	for(let i=0;i<rq.kolNodes;i++)
 		exportJSON.nodes       [rq.labels[i]] = JSON.parse(fs.readFileSync(`./data/export/${rq.labels[i]}.json`)).list;
-	for(let i=7;i<11;i++)
+	for(let i=rq.kolNodes;i<rq.kolNodes+rq.kolRels;i++)
 		exportJSON.relationship[rq.labels[i]] = JSON.parse(fs.readFileSync(`./data/export/${rq.labels[i]}.json`)).list;
 	return exportJSON;
 }

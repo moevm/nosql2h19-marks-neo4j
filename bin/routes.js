@@ -63,7 +63,8 @@ router.use("/public", express.static('public'));
 		db.doTest(res, req.body, classicEnd);
 	});
 	
-	
+////////////
+//Страница 2
 	//Зачислить/отчислить студента
 	router.post("/addStudent", (req, res) => {
 		db.doAddStudent(res, req.body, (res, answer)=>{
@@ -75,27 +76,6 @@ router.use("/public", express.static('public'));
 			db.do2(res, req.body, classicEnd);
 		})
 	});
-	
-	//Призвать/изгнать препода
-	router.post("/addTeacher", (req, res) => {
-		db.doAddTeacher(res, req.body, (res, answer)=>{
-			db.do3(res, req.body, classicEnd);
-		})
-	});
-	router.post("/delTeacher", (req, res) => {
-		db.doDelTeacher(res, req.body, (res, answer)=>{
-			db.do3(res, req.body, classicEnd);
-		})
-	});
-	
-	
-	//Запрос на получение оценок студента
-	router.post("/getAssessmets", (req, res) =>{
-		db.doGetAssessmets(res, req.body, classicEnd);
-	});
-	
-	
-	
 	//Вызов фильтров
 	router.post("/getFilter", (req, res)=>{
 		db.doGetFilter(res, req.body, classicEnd);
@@ -111,11 +91,37 @@ router.use("/public", express.static('public'));
 	});
 	
 	
+////////////
+//Страница 3
+	//Призвать/изгнать препода
+	router.post("/addTeacher", (req, res) => {
+		db.doAddTeacher(res, req.body, (res, answer)=>{
+			db.do3(res, req.body, classicEnd);
+		})
+	});
+	router.post("/delTeacher", (req, res) => {
+		db.doDelTeacher(res, req.body, (res, answer)=>{
+			db.do3(res, req.body, classicEnd);
+		})
+	});
 	
+	
+////////////
+//Страница 5
+	//Запрос на получение оценок студента
+	router.post("/getAssessmets", (req, res) =>{
+		db.doGetAssessmets(res, req.body, classicEnd);
+	});
+	
+	
+////////////
+//Страница 6
 	//Ср. оценка на факультете за период
 	router.post("/avgAssessmentPerFacultetFromDate", (req, res)=>{
 		db.doAvgAssessmentPerFacultetFromDate(res, req.body, classicEnd);
 	});
+	
+	
 	
 	classicEnd = (res,answer)=>{res.json(answer); res.status(200);};
 }

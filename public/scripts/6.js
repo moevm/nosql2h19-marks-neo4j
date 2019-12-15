@@ -1,12 +1,3 @@
-function startTest(){
-		ajaxPost(
-			"/test",
-			{},
-			(req)=>{alert(req);}
-		);
-}
-
-
 function getRequest(){
 	ajaxPost(
 		"/avgAssessmentPerFacultetFromDate",

@@ -24,44 +24,47 @@ let ajaxDelete  = (name, body={}, func=()=>{})=>{ajax("DELETE", name, body, func
 // 		fields: [field1, field2,...],
 //      stats:  [[a11,a12,..],[a21,a22,...],...] 
 // }
-function responseRecordsParser(records){
-	let ret = {
-		fields: records[0].keys,
-		stats: []
-	};
-	for (rec in records)
-		ret.stats.push(records[rec]._fields);
+
+// function responseRecordsParser(records){
+	// let ret = {
+		// fields: records[0].keys,
+		// stats: []
+	// };
+	// for (rec in records)
+		// ret.stats.push(records[rec]._fields);
 	
 	
-	return ret;
-}
-function createTable(data){
-	let table = "<table border=1><tr>";	
-	for (i in data.fields){
-		table += `<th>${data.fields[i]}</th>`;
-	}
-	table += "</tr>";
+	// return ret;
+// }
+
+// function createTable(data){
+	// let table = "<table border=1><tr>";	
+	// for (i in data.fields){
+		// table += `<th>${data.fields[i]}</th>`;
+	// }
+	// table += "</tr>";
 	
-	for (i in data.stats){
-		st = data.stats[i];
-		table += "<tr>"
-		for (j in st)
-			table += `<td>${st[j]}</td>`;
+	// for (i in data.stats){
+		// st = data.stats[i];
+		// table += "<tr>"
+		// for (j in st)
+			// table += `<td>${st[j]}</td>`;
 		
-		table += "/<tr>"
-	}
+		// table += "/<tr>"
+	// }
 	
-	return table + "</table>";
-}
+	// return table + "</table>";
+// }
 
 //Базовая функция для вывода на экран ответа сервера
 // на вход - запись, id div-а, куда запихнём таблицу-ответ
-function basicHandler(records, id = "retTable"){
-	if (records.length==0)
-		return;
+
+// function basicHandler(records, id = "retTable"){
+	// if (records.length==0)
+		// return;
 	
 	
 	
 	
-	$(`#${id}`).html(createTable(responseRecordsParser(records)));
-}
+	// $(`#${id}`).html(createTable(responseRecordsParser(records)));
+// }

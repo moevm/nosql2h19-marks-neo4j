@@ -1,28 +1,3 @@
-function startTest(){
-		ajaxPost(
-			"/test",
-			{},
-			(req)=>{alert(req);}
-		);
-}
-
-
-function toTeacher(id){
-		ajaxPut(
-			"/toTeacher",
-			{id: id},
-			()=>{}
-		);
-}
-
-function delTeacher(id){
-		ajaxPost(
-			"/delTeacher",
-			{id: id},
-			rewriteTable
-		);
-}
-
 function addTeacher(){
 	body = {}
 	if ($("#num").val()){body.name = $("#num").val()}
@@ -45,6 +20,14 @@ function addTeacher(){
 		body,
 		rewriteTable
 	);
+}
+
+function delTeacher(id){
+		ajaxPost(
+			"/delTeacher",
+			{id: id},
+			rewriteTable
+		);
 }
 
 //Перезапись таблицы со студентами

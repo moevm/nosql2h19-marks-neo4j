@@ -60,30 +60,6 @@ function filtration(){
 	);
 }
 
-function startTest(){
-		ajaxPost(
-			"/test",
-			{},
-			(req)=>{alert(req);}
-		);
-}
-
-
-function toStudent(id){
-		ajaxPut(
-			"/toStudent",
-			{id: id},
-			()=>{}
-		);
-}
-
-function delStudent(id){
-		ajaxPost(
-			"/delStudent",
-			{id: id},
-			rewriteTable
-		);
-}
 
 function addStudent(){
 	body = {}
@@ -108,6 +84,15 @@ function addStudent(){
 		rewriteTable
 	);
 }
+
+function delStudent(id){
+		ajaxPost(
+			"/delStudent",
+			{id: id},
+			rewriteTable
+		);
+}
+
 
 //Перезапись таблицы со студентами
 function rewriteTable(strs){
