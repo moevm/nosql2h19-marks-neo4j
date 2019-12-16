@@ -69,16 +69,41 @@ class Data{
 	doGetFacultet(res, params, end){
 		rq.getFacultet(
 			res,
-			(res, result)=>{end(res, this.parseClassic(result));},
+			(res, result)=>{end(res, this.parseGetFacultet(result));},
 			params
 		);
+	}
+	parseGetFacultet(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1].low,
+					result.records[i]._fields[2].low
+				]
+			);
+		}
+		return ret;
 	}
 	doGetNapravlenie(res, params, end){
 		rq.getNapravlenie(
 			res,
-			(res, result)=>{end(res, this.parseClassic(result));},
+			(res, result)=>{end(res, this.parseGetNapravlenie(result));},
 			params
 		);
+	}
+	parseGetNapravlenie(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1].low
+				]
+			);
+		}
+		return ret;
 	}
 	doGetGroup(res, params, end){
 		rq.getGroup(
@@ -87,8 +112,8 @@ class Data{
 			params
 		);
 	}
-
-
+	
+	
 ////////////
 //Страница 3
 	// Набор "Кафедра-Препод"
@@ -108,6 +133,26 @@ class Data{
 					result.records[i]._fields[1],
 					result.records[i]._fields[2],
 					result.records[i]._fields[3].low
+				]
+			);
+		}
+		return ret;
+	}
+	doGetKafedras(res, params, end){
+		rq.getKafedras(
+			res,
+			(res, result)=>{end(res, this.parseGetKafedras(result));},
+			params
+		);
+	}
+	parseGetKafedras(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1].low,
+					result.records[i]._fields[2].low
 				]
 			);
 		}
@@ -172,6 +217,14 @@ class Data{
 			params
 		);
 	}
+	//Убрать оценку
+	doDellAssesement(res, params, end){
+		rq.dellAssesement(
+			res,
+			end,
+			params
+		);
+	}
 	doGetLessAndTeach(res, params, end){
 		rq.getLessAndTeach(
 			res,
@@ -196,6 +249,7 @@ class Data{
 		return ret;
 	}
 
+
 ////////////
 //Страница 6
 	////Ср. оценка на факультете за период
@@ -217,6 +271,157 @@ class Data{
 			);
 		}
 		return ret;
+	}
+
+
+
+///////////////////
+//Страница Facultet
+	doGetFacultetByID(res, params, end){
+		rq.getFacultetByID(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
+	doGetNapravleniaByFac(res, params, end){
+		rq.getNapravleniaByFac(
+			res,
+			(res, result)=>{end(res, this.parseGetNapravleniaByFac(result));},
+			params
+		);
+	}
+	parseGetNapravleniaByFac(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1],
+					result.records[i]._fields[2].low,
+					result.records[i]._fields[3].low
+				]
+			);
+		}
+		return ret;
+	}
+	doAddNapravlenie(res, params, end){
+		rq.addNapravlenie(
+			res,
+			end,
+			params
+		);
+	}
+	doDellNapravlenie(res, params, end){
+		rq.dellNapravlenie(
+			res,
+			end,
+			params
+		);
+	}
+	
+	
+//////////////////
+//Страница Kafedra
+	doGetKafedraByID(res, params, end){
+		rq.getKafedraByID(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
+	doGetLessonsByKaf(res, params, end){
+		rq.getLessonsByKaf(
+			res,
+			(res, result)=>{end(res, this.parseGetLessonByKaf(result));},
+			params
+		);
+	}
+	parseGetLessonByKaf(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1].low,
+					result.records[i]._fields[2].low
+				]
+			);
+		}
+		return ret;
+	}
+	doAddLesson(res, params, end){
+		rq.addLesson(
+			res,
+			end,
+			params
+		);
+	}
+	doDellLesson(res, params, end){
+		rq.dellLesson(
+			res,
+			end,
+			params
+		);
+	}
+	
+	
+//////////////////////
+//Страница Napravlenie	
+	doGetNapravlenieByID(res, params, end){
+		rq.getNapravlenieByID(
+			res,
+			(res, result)=>{end(res, this.parseGetNapravlenieByID(result));},
+			params
+		);
+	}
+	parseGetNapravlenieByID(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				 [
+					 result.records[i]._fields[0],
+					 result.records[i]._fields[1].low,
+				 ]
+			);
+		}
+		return ret;
+	}
+	doGetGroupByNapr(res, params, end){
+		rq.getGroupByNapr(
+			res,
+			(res, result)=>{end(res, this.parseGetGroupByNapr(result));},
+			params
+		);
+	}
+	parseGetGroupByNapr(result){
+		let ret = [];
+		
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1].low,
+					result.records[i]._fields[2].low
+				]
+			);
+		}
+		return ret;
+	}
+	//Запрос "добавление группы"
+	doAddGroup(res, params, end){
+		rq.addGroup(
+			res,
+			end,
+			params
+		);
+	}
+	doDellGroup(res, params, end){
+		rq.dellGroup(
+			res,
+			end,
+			params
+		);
 	}
 	
 	
