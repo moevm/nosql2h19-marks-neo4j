@@ -270,7 +270,7 @@ class Data{
 				//импортируем из файла
 				rq.doImport(res,(res)=>{
 					//очищаем "левые" идишники
-					rq.remCrutchID(res)})}
+					rq.remCrutchID(res,(res)=>{res.sendFile("Upload.html", {root: "public/html"});})})}
 				);
 			}
 		);
