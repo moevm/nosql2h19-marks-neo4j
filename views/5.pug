@@ -2,7 +2,7 @@ html
 	head
 		meta(charset="utf-8")
 
-		title TestSite
+		title #{std[3]} #{std[4]}
 		
 		script(src="/public/scripts/jquery.js")
 		script(src="/public/scripts/ajax.js")
@@ -26,8 +26,7 @@ html
 				td Дата сдачи
 				td
 			tbody(id="ocenki")
-				
-				
+		
 		p
 		table
 			tr
@@ -45,8 +44,7 @@ html
 						option(value="4") 4
 						option(value="5") 5
 				td
-					button(onclick="addAssesement()") Выставить		
-						
+					button(onclick="addAssesement()") Выставить
 						
 		//input(type="text" id="Predmet")
 		//input(type="text" id="Prepod")
@@ -55,7 +53,7 @@ html
 		//button(align="center") Изменить
 		
 		p
-		a(href="http://localhost:3000/")
+		a(href="http://localhost:3000/main")
 			button(align="center") На гл.страницу
 			a(href="http://localhost:3000/2")
 				button(align="center") Назад

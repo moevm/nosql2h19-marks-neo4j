@@ -1,0 +1,41 @@
+html
+	head
+		meta(charset="utf-8")
+
+		title #{facultet}
+		
+		script(src="/public/scripts/jquery.js")
+		script(src="/public/scripts/ajax.js")
+		script(src="/public/scripts/Facultet.js")
+		
+		
+	body
+		p(id="id" style="display: none") #{id}
+		
+		h1 Факультет #{facultet}
+		
+		table(style="border: solid 1px")
+			thead
+				tr
+					td Направление
+					td
+			tbody(id="napravlenieTable")
+
+		
+		table
+			tr
+				td
+					input(id="napravlenie")
+				td
+					button(onclick="addNapravlenie()") Добавить направление
+					
+					
+					
+		p
+		a(href="http://localhost:3000/")
+			button(align="center") На гл.страницу
+		a(href="http://localhost:3000/facultets")
+			button(align="center") Назад
+			
+script.
+	$("document").ready(()=>{getNapravleniaByFac()})

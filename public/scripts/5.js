@@ -1,6 +1,7 @@
 //Переменая для связей Предмет-препод
 let lt = new Map();
 
+
 function getAssessmets(){
 	ajaxPost(
 		"/getAssessmets",
@@ -28,8 +29,16 @@ function addAssesement(){
 	);
 }
 function dellAssesment(lesson){
-
+	ajaxPost(
+		"/dellAssesement",
+		{
+			id: $("#id").text(),
+			lesson: lesson,
+		},
+		()=>{getAssessmets();getLessAndTeach()}
+	);
 }
+
 
 
 function getLessAndTeach(){
@@ -71,7 +80,6 @@ function rewriteTeacherList(){
 		$("#teacher").append(`<option value="${tch[0]}">${tch[1]}</option>`);
 	}
 }
-
 
 
 function rewriteTable(strs){

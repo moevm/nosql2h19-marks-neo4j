@@ -93,6 +93,9 @@ router.use("/public", express.static('public'));
 	
 ////////////
 //Страница 3
+	router.post("/getKafedras", (req, res)=>{
+		db.doGetKafedras(res, req.body, classicEnd);
+	});
 	//Призвать/изгнать препода
 	router.post("/addTeacher", (req, res) => {
 		db.doAddTeacher(res, req.body, (res, answer)=>{
@@ -116,10 +119,15 @@ router.use("/public", express.static('public'));
 	router.post("/addAssesement", (req, res) =>{
 		db.doAddAssesement(res, req.body, classicEnd);
 	});
+	//Убрать отметку студенту
+	router.post("/dellAssesement", (req, res) =>{
+		db.doDellAssesement(res, req.body, classicEnd);
+	});
 	//Список предметов, которые ещё не проставлены и кто может проставить
 	router.post("/getLessAndTeach", (req, res) =>{
 		db.doGetLessAndTeach(res, req.body, classicEnd);
 	});
+
 	
 ////////////
 //Страница 6
@@ -127,6 +135,50 @@ router.use("/public", express.static('public'));
 	router.post("/avgAssessmentPerFacultetFromDate", (req, res)=>{
 		db.doAvgAssessmentPerFacultetFromDate(res, req.body, classicEnd);
 	});
+	
+	
+///////////////////
+//Страница Facultet
+	router.post("/getNapravleniaByFac", (req,res)=>{
+		db.doGetNapravleniaByFac(res,req.body, classicEnd);
+	});
+	//Добавление направления
+	router.post("/addNapravlenie", (req,res)=>{
+		db.doAddNapravlenie(res, req.body, classicEnd)
+	});
+	//Удаление направления
+	router.post("/dellNapravlenie", (req,res)=>{
+		db.doDellNapravlenie(res, req.body, classicEnd)
+	});
+	
+	
+//////////////////
+//Страница Kafedra	
+	router.post("/getLessonsByKaf", (req,res)=>{
+		db.doGetLessonsByKaf(res,req.body, classicEnd);
+	});
+	//addLesson -> 23 
+	router.post("/dellLesson", (req,res)=>{
+		db.doDellLesson(res, req.body, classicEnd)
+	});
+	
+	
+//////////////////////
+//Страница Napravlenie
+	router.post("/getGroupByNapr", (req, res)=>{
+		db.doGetGroupByNapr(res, req.body, classicEnd);
+	});
+	router.post("/addGroup2", (req,res)=>{
+		db.doAddGroup(res, req.body, (res, answer)=>{
+			db.doGetGroupByNapr(res, req.body, classicEnd);
+		})
+	});
+	router.post("/dellGroup", (req,res)=>{
+		db.doDellGroup(res, req.body, (res, answer)=>{
+			db.doGetGroupByNapr(res, req.body, classicEnd);
+		})
+	});
+
 	
 	
 	
@@ -177,6 +229,24 @@ router.use("/public", express.static('public'));
 	
 	router.get("/6", (req, res) => {
 		db.doGetFacultet(res, {id: req.params.id}, (res, ans)=>{res.render("6", {facultet: ans});});
+	});
+	
+	
+	router.get("/facultets", (req, res) => {
+		db.doGetFacultet(res, req.body, (res, ans)=>{res.render("Facultets", {facultets: ans});});
+	});
+	router.get("/facultet/:id", (req, res) => {
+		db.doGetFacultetByID(res, {id: req.params.id}, (res, ans)=>{res.render("Facultet", {facultet: ans, id:req.params.id});});
+	});
+	router.get("/napravlenie/:id", (req, res) => {
+		db.doGetNapravlenieByID(res, {id: req.params.id}, (res, ans)=>{res.render("Napravlenie", {napravlenie: ans, id:req.params.id});});
+	});
+	
+	router.get("/kafedras", (req, res) => {
+		db.doGetKafedras(res, req.body, (res, ans)=>{res.render("Kafedras", {kafedras: ans});});
+	});
+	router.get("/kafedra/:id", (req, res) => {
+		db.doGetKafedraByID(res, {id: req.params.id}, (res, ans)=>{res.render("Kafedra", {kafedra: ans, id:req.params.id});});
 	});
 	//\\\\\\\
 	///////////
