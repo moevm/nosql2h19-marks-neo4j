@@ -200,6 +200,47 @@ class Requests{
 		);
 	}
 	
+
+/////////////
+//Страница 7
+	_7(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`match (t:Teacher)--(l:Kafedra) WHERE id(t)=${params.id} return l.name, t.Lastname, t.Firstname, id(t);`,
+			res,
+			func
+		);
+	}
+	//Получить все предметы которые ведёт препод(id)
+	getLessons(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (S:Teacher)--(L:Lesson) WHERE id(S)=${params.id} RETURN L.name;`,
+			res,
+			func
+		);
+	}
+	//Получить все предметы которые может вести препод(id)
+	getAnotherLessons(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (S:Teacher)WHERE id(S)=${params.id} OPTIONAL \
+			MATCH (S)--(:Kafedra)--(L:Lesson) WHERE not((S)--(L))  RETURN L.name;`,
+			res,
+			func
+		);
+	}
+	addLessonToTeacher(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (S:Teacher), (l:Lesson{name:"${params.lesson}"}) WHERE id(S)=${params.id} CREATE (S)-[:Teach]->(l);`,
+			res,
+			func
+		);
+	}
+	dellLessonToTeacher(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (S:Teacher)-[r]->(l:Lesson{name:"${params.lesson}"}) WHERE id(S)=${params.id} DELETE r;`,
+			res,
+			func
+		);
+	}
 	
 
 ///////////////////

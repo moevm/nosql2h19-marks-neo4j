@@ -274,6 +274,59 @@ class Data{
 	}
 
 
+/////////////
+//Страница 7
+	// Набор "Препод-Предметы"
+	do7(res, params, end){
+			rq._7(
+			res,
+			(res, result)=>{end(res, this.parse22(result));},
+			params
+		);
+	}
+	parse7(result){
+		let ret = [];
+		for (let i in result.records){
+			ret.push(
+				 [
+					 result.records[i]._fields[0],
+					 result.records[i]._fields[1],
+					 result.records[i]._fields[2],
+					 result.records[i]._fields[3].low,
+				 ]
+			);
+		}
+		return ret;
+	}
+	doGetLessons(res, params, end){
+		rq.getLessons(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
+	doGetAnotherLessons(res, params, end){
+		rq.getAnotherLessons(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
+	doAddLessonToTeacher(res, params, end){
+		rq.addLessonToTeacher(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
+	doDellLessonToTeacher(res, params, end){
+		rq.dellLessonToTeacher(
+			res,
+			(res, result)=>{end(res, this.parseClassic(result));},
+			params
+		);
+	}
+
 
 ///////////////////
 //Страница Facultet
