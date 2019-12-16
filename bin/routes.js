@@ -157,6 +157,26 @@ router.use("/public", express.static('public'));
 	});
 
 
+////////////
+//Страница 8
+	//Список предметов и преподавателей
+	router.post("/getTeachAndLess", (req, res) =>{
+		db.doGetTeachAndLess(res, req.body, classicEnd);
+	});
+	router.post("/countAssesementByTeacherOnLesson", (req, res) =>{
+		console.log(req.body)
+		db.doCountAssesementByTeacherOnLesson(res, req.body, classicEnd);
+	});
+	
+	
+////////////
+//Страница 9
+	//Список предметов, которые ещё не проставлены и кто может проставить
+	router.post("/workloadOnKafedra", (req, res) =>{
+		db.doWorkloadOnKafedra(res, req.body, classicEnd);
+	});	
+	
+	
 ///////////////////
 //Страница Facultet
 	router.post("/getNapravleniaByFac", (req,res)=>{
@@ -254,7 +274,10 @@ router.use("/public", express.static('public'));
 	router.get("/7/:id", (req, res) => {
 		db.do7(res, {id: req.params.id}, (res, ans)=>{res.render("7", {std: ans[0]});});
 	});
-
+	
+	router.get("/9", (req, res) => {
+		db.doGetKafedras(res, req.body, (res, ans)=>{res.render("9", {kafedras: ans});});
+	});
 	router.get("/facultets", (req, res) => {
 		db.doGetFacultet(res, req.body, (res, ans)=>{res.render("Facultets", {facultets: ans});});
 	});
