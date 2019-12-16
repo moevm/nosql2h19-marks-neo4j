@@ -333,7 +333,7 @@ class Data{
 		let nodes = [];
 		
 		for (let i in result.records){
-			if (result.records[i]._fields.length == 1)
+			if (result.records[i]._fields[0].length == 1)
 				nodes.push(
 						result.records[i]._fields[0][0]
 				);
