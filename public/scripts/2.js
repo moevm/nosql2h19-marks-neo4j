@@ -24,8 +24,13 @@ $('document').ready(()=>{
 		{},
 		(req)=>{
 			let filtr = $('#Group').find('.filter');
+			let grLst = $('#num');
+			
+			grLst.find("option").remove();
+			
 			for(let i in req){
 				filtr.append(`<input type="checkbox" checked="checked" value="${req[i]}">${req[i]}<br>`);
+				grLst.append(`<option value=${req[i]}>${req[i]}</option>`);
 			}
 		}
 	);
@@ -92,7 +97,6 @@ function delStudent(id){
 			rewriteTable
 		);
 }
-
 
 //Перезапись таблицы со студентами
 function rewriteTable(strs){
