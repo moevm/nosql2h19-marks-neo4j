@@ -1,0 +1,35 @@
+html
+	head
+		meta(charset="utf-8")
+
+		title Средняя оценка на факультете
+		
+		script(src="/public/scripts/jquery.js")
+		script(src="/public/scripts/ajax.js")
+		script(src="/public/scripts/8.js")
+		script(src="/public/scripts/anychart.js")
+	body
+		h1 Число оценок, выставленных преподователем по имени 
+			select(id="teacher" onchange="rewriteLessonList()")
+				option
+				
+		h1 по предмету 
+			select(id="lesson")
+				option
+		p
+		button(onclick="getRequest()") Запрос
+		
+		div(id="container" style="width: 400; height: 400")
+
+		
+
+		p
+		a(href="http://localhost:3000/")
+			button(align="center") На гл.страницу
+		a(href="http://localhost:3000/4")
+			button(align="center") Назад
+			
+script.
+	$( document ).ready(function() {
+		getLessAndTeach();
+	});
