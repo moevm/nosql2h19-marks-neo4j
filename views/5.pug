@@ -24,10 +24,28 @@ html
 				td Преподаватель
 				td Оценка
 				td Дата сдачи
+				td
 			tbody(id="ocenki")
 				
 				
-					
+		p
+		table
+			tr
+				td
+					select(id="lesson" onchange="rewriteTeacherList()")
+						option
+				td
+					select(id="teacher")
+						option
+				td
+					input(id="date" type="date")
+				td
+					select(id="assesement")
+						option(value="3") 3
+						option(value="4") 4
+						option(value="5") 5
+				td
+					button(onclick="addAssesement()") Выставить		
 						
 						
 		//input(type="text" id="Predmet")
@@ -45,4 +63,5 @@ html
 script.
 	$( document ).ready(function() {
 		getAssessmets();
+		getLessAndTeach();
 	});

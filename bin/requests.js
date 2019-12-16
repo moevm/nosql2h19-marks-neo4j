@@ -145,6 +145,23 @@ class Requests{
 			func
 		);
 	}
+	//Выставить отметку
+	addAssesement(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (S:Student), (L:Lesson{name:"${params.lesson}"}) WHERE id(S)=${params.id}\
+			CREATE (S)-[:Has{date:"${params.date}", assessment:"${params.assesement}", teach_id:${params.teacher}}]->(L);`,
+			res,
+			func
+		);
+	}
+	//Получить Возможные оценки и кто их проставит
+	getLessAndTeach(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (S:Student) WHERE id(S)=${params.id} OPTIONAL MATCH (t:Teacher)--(l:Lesson) WHERE not ((S)--(l)) return l.name,id(t),t.Firstname,t.Lastname;`,
+			res,
+			func
+		);
+	}
 	
 
 ////////////

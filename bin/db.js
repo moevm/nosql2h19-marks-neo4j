@@ -164,7 +164,37 @@ class Data{
 			params
 		);
 	}
-	
+	//Выставить оценку
+	doAddAssesement(res, params, end){
+		rq.addAssesement(
+			res,
+			end,
+			params
+		);
+	}
+	doGetLessAndTeach(res, params, end){
+		rq.getLessAndTeach(
+			res,
+			(res, result)=>{end(res, this.parseGetLessAndTeach(result));},
+			params
+		);
+	}
+	parseGetLessAndTeach(result){
+		let ret = [];
+		if (result.records[0]._fields[0]==null){
+			return ret;
+		}
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1].low,
+					`${result.records[i]._fields[2]} ${result.records[i]._fields[3]}`
+				]
+			);
+		}
+		return ret;
+	}
 
 ////////////
 //Страница 6

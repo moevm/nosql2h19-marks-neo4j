@@ -112,7 +112,14 @@ router.use("/public", express.static('public'));
 	router.post("/getAssessmets", (req, res) =>{
 		db.doGetAssessmets(res, req.body, classicEnd);
 	});
-	
+	//Выставить отметку студенту
+	router.post("/addAssesement", (req, res) =>{
+		db.doAddAssesement(res, req.body, classicEnd);
+	});
+	//Список предметов, которые ещё не проставлены и кто может проставить
+	router.post("/getLessAndTeach", (req, res) =>{
+		db.doGetLessAndTeach(res, req.body, classicEnd);
+	});
 	
 ////////////
 //Страница 6
