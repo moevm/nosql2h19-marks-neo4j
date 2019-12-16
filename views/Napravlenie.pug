@@ -1,0 +1,41 @@
+html
+	head
+		meta(charset="utf-8")
+
+		title #{napravlenie}
+		
+		script(src="/public/scripts/jquery.js")
+		script(src="/public/scripts/ajax.js")
+		script(src="/public/scripts/Napravlenie.js")
+		
+		
+	body
+		p(id="id" style="display: none") #{id}
+		
+		h1 Направление #{napravlenie[0][0]}
+		
+		table(style="border: solid 1px")
+			thead
+				tr
+					td Группа
+					td
+			tbody(id="groupTable")
+
+		
+		table
+			tr
+				td
+					input(id="group")
+				td
+					button(onclick="addGroup()") Добавить группу
+					
+					
+					
+		p
+		a(href="http://localhost:3000/")
+			button(align="center") На гл.страницу
+		a(href="http://localhost:3000/facultet/"+napravlenie[0][1])
+			button(align="center") Назад
+			
+script.
+	$("document").ready(()=>{getGroupByNapr()})

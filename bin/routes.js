@@ -63,7 +63,8 @@ router.use("/public", express.static('public'));
 		db.doTest(res, req.body, classicEnd);
 	});
 	
-	
+////////////
+//Страница 2
 	//Зачислить/отчислить студента
 	router.post("/addStudent", (req, res) => {
 		db.doAddStudent(res, req.body, (res, answer)=>{
@@ -75,27 +76,6 @@ router.use("/public", express.static('public'));
 			db.do2(res, req.body, classicEnd);
 		})
 	});
-	
-	//Призвать/изгнать препода
-	router.post("/addTeacher", (req, res) => {
-		db.doAddTeacher(res, req.body, (res, answer)=>{
-			db.do3(res, req.body, classicEnd);
-		})
-	});
-	router.post("/delTeacher", (req, res) => {
-		db.doDelTeacher(res, req.body, (res, answer)=>{
-			db.do3(res, req.body, classicEnd);
-		})
-	});
-	
-	
-	//Запрос на получение оценок студента
-	router.post("/getAssessmets", (req, res) =>{
-		db.doGetAssessmets(res, req.body, classicEnd);
-	});
-	
-	
-	
 	//Вызов фильтров
 	router.post("/getFilter", (req, res)=>{
 		db.doGetFilter(res, req.body, classicEnd);
@@ -111,11 +91,136 @@ router.use("/public", express.static('public'));
 	});
 	
 	
+////////////
+//Страница 3
+	router.post("/getKafedras", (req, res)=>{
+		db.doGetKafedras(res, req.body, classicEnd);
+	});
+	//Призвать/изгнать препода
+	router.post("/addTeacher", (req, res) => {
+		db.doAddTeacher(res, req.body, (res, answer)=>{
+			db.do3(res, req.body, classicEnd);
+		})
+	});
+	router.post("/delTeacher", (req, res) => {
+		db.doDelTeacher(res, req.body, (res, answer)=>{
+			db.do3(res, req.body, classicEnd);
+		})
+	});
 	
+	
+////////////
+//Страница 5
+	//Запрос на получение оценок студента
+	router.post("/getAssessmets", (req, res) =>{
+		db.doGetAssessmets(res, req.body, classicEnd);
+	});
+	//Выставить отметку студенту
+	router.post("/addAssesement", (req, res) =>{
+		db.doAddAssesement(res, req.body, classicEnd);
+	});
+	//Убрать отметку студенту
+	router.post("/dellAssesement", (req, res) =>{
+		db.doDellAssesement(res, req.body, classicEnd);
+	});
+	//Список предметов, которые ещё не проставлены и кто может проставить
+	router.post("/getLessAndTeach", (req, res) =>{
+		db.doGetLessAndTeach(res, req.body, classicEnd);
+	});
+
+	
+////////////
+//Страница 6
 	//Ср. оценка на факультете за период
 	router.post("/avgAssessmentPerFacultetFromDate", (req, res)=>{
 		db.doAvgAssessmentPerFacultetFromDate(res, req.body, classicEnd);
 	});
+	
+	
+/////////////
+//Страница 7
+	//Запрос на получение предметов, которые ведёт препод
+	router.post("/getLessons", (req, res) =>{
+		db.doGetLessons(res, req.body, classicEnd);
+	});
+	//Запрос на получение предметов, которые может вести препод
+	router.post("/getAnotherLessons", (req, res) =>{
+		db.doGetAnotherLessons(res, req.body, classicEnd);
+	});
+	//Нагрузить препода
+	router.post("/addLessonToTeacher", (req, res) =>{
+		db.doAddLessonToTeacher(res, req.body, classicEnd);
+	});
+	//Разгрузить препода
+	router.post("/dellLessonToTeacher", (req, res) =>{
+		db.doDellLessonToTeacher(res, req.body, classicEnd);
+	});
+
+
+////////////
+//Страница 8
+	//Список предметов и преподавателей
+	router.post("/getTeachAndLess", (req, res) =>{
+		db.doGetTeachAndLess(res, req.body, classicEnd);
+	});
+	router.post("/countAssesementByTeacherOnLesson", (req, res) =>{
+		console.log(req.body)
+		db.doCountAssesementByTeacherOnLesson(res, req.body, classicEnd);
+	});
+	
+	
+////////////
+//Страница 9
+	//Список предметов, которые ещё не проставлены и кто может проставить
+	router.post("/workloadOnKafedra", (req, res) =>{
+		db.doWorkloadOnKafedra(res, req.body, classicEnd);
+	});	
+	
+	
+///////////////////
+//Страница Facultet
+	router.post("/getNapravleniaByFac", (req,res)=>{
+		db.doGetNapravleniaByFac(res,req.body, classicEnd);
+	});
+	//Добавление направления
+	router.post("/addNapravlenie", (req,res)=>{
+		db.doAddNapravlenie(res, req.body, classicEnd)
+	});
+	//Удаление направления
+	router.post("/dellNapravlenie", (req,res)=>{
+		db.doDellNapravlenie(res, req.body, classicEnd)
+	});
+	
+	
+//////////////////
+//Страница Kafedra	
+	router.post("/getLessonsByKaf", (req,res)=>{
+		db.doGetLessonsByKaf(res,req.body, classicEnd);
+	});
+	//addLesson -> 23 
+	router.post("/dellLesson", (req,res)=>{
+		db.doDellLesson(res, req.body, classicEnd)
+	});
+	
+	
+//////////////////////
+//Страница Napravlenie
+	router.post("/getGroupByNapr", (req, res)=>{
+		db.doGetGroupByNapr(res, req.body, classicEnd);
+	});
+	router.post("/addGroup2", (req,res)=>{
+		db.doAddGroup(res, req.body, (res, answer)=>{
+			db.doGetGroupByNapr(res, req.body, classicEnd);
+		})
+	});
+	router.post("/dellGroup", (req,res)=>{
+		db.doDellGroup(res, req.body, (res, answer)=>{
+			db.doGetGroupByNapr(res, req.body, classicEnd);
+		})
+	});
+
+	
+	
 	
 	classicEnd = (res,answer)=>{res.json(answer); res.status(200);};
 }
@@ -128,8 +233,8 @@ router.use("/public", express.static('public'));
 {//Базовая адресация:
 	//Открытие начальной страницы
 	router.get("/", (req, res) => {
-		res.sendFile("main.html", {root: "public/html"});
-		//res.render('main');
+		//res.sendFile("main.html", {root: "public/html"});
+		res.render('main');
 	});
 	
 	
@@ -164,6 +269,30 @@ router.use("/public", express.static('public'));
 	
 	router.get("/6", (req, res) => {
 		db.doGetFacultet(res, {id: req.params.id}, (res, ans)=>{res.render("6", {facultet: ans});});
+	});
+	
+	router.get("/7/:id", (req, res) => {
+		db.do7(res, {id: req.params.id}, (res, ans)=>{res.render("7", {std: ans[0]});});
+	});
+	
+	router.get("/9", (req, res) => {
+		db.doGetKafedras(res, req.body, (res, ans)=>{res.render("9", {kafedras: ans});});
+	});
+	router.get("/facultets", (req, res) => {
+		db.doGetFacultet(res, req.body, (res, ans)=>{res.render("Facultets", {facultets: ans});});
+	});
+	router.get("/facultet/:id", (req, res) => {
+		db.doGetFacultetByID(res, {id: req.params.id}, (res, ans)=>{res.render("Facultet", {facultet: ans, id:req.params.id});});
+	});
+	router.get("/napravlenie/:id", (req, res) => {
+		db.doGetNapravlenieByID(res, {id: req.params.id}, (res, ans)=>{res.render("Napravlenie", {napravlenie: ans, id:req.params.id});});
+	});
+	
+	router.get("/kafedras", (req, res) => {
+		db.doGetKafedras(res, req.body, (res, ans)=>{res.render("Kafedras", {kafedras: ans});});
+	});
+	router.get("/kafedra/:id", (req, res) => {
+		db.doGetKafedraByID(res, {id: req.params.id}, (res, ans)=>{res.render("Kafedra", {kafedra: ans, id:req.params.id});});
 	});
 	//\\\\\\\
 	///////////

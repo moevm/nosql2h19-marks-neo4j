@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 html
 	head
 		meta(charset="utf-8")
@@ -45,4 +46,70 @@ html
 script.
 	$( document ).ready(function() {
 		getAssessmets();
+=======
+html
+	head
+		meta(charset="utf-8")
+
+		title #{std[3]} #{std[4]}
+		
+		script(src="/public/scripts/jquery.js")
+		script(src="/public/scripts/ajax.js")
+		script(src="/public/scripts/5.js")
+	body
+		p(id="id" style="display: none") #{std[5]}
+		
+		
+		h1 Студент
+		h2 #{std[3]} #{std[4]}
+		p Группа: #{std[2]}
+		p Направление: #{std[1]}
+		p Факультет: #{std[0]}
+		
+		p Успеваемость:
+		table(style="border: solid 1px" )
+			thead
+				td Предмет
+				td Преподаватель
+				td Оценка
+				td Дата сдачи
+				td
+			tbody(id="ocenki")
+		
+		p
+		table
+			tr
+				td
+					select(id="lesson" onchange="rewriteTeacherList()")
+						option
+				td
+					select(id="teacher")
+						option
+				td
+					input(id="date" type="date")
+				td
+					select(id="assesement")
+						option(value="3") 3
+						option(value="4") 4
+						option(value="5") 5
+				td
+					button(onclick="addAssesement()") Выставить
+						
+		//input(type="text" id="Predmet")
+		//input(type="text" id="Prepod")
+		//input(type="text" id="Ocenka")
+		//input(type="text" id="date")
+		//button(align="center") Изменить
+		
+		p
+		a(href="http://localhost:3000/main")
+			button(align="center") На гл.страницу
+			a(href="http://localhost:3000/2")
+				button(align="center") Назад
+				
+script.
+	$( document ).ready(function() {
+		getAssessmets();
+		getLessAndTeach();
+>>>>>>> dccde8bf2870d79e35a7872b88980f4dfb53b140
 	});

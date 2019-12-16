@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 html
 	head
 		meta(charset="utf-8")
@@ -50,3 +51,63 @@ html
 		p
 		a(href="http://localhost:3000/main")
 			button(align="center") На гл.страницу
+=======
+html
+	head
+		meta(charset="utf-8")
+
+		title Преподаватели
+		
+		script(src="/public/scripts/jquery.js")
+		script(src="/public/scripts/ajax.js")
+		script(src="/public/scripts/3.js")
+	body
+		h1 Преподаватели
+		table(style="border: solid 1px" )
+			thead
+				td Кафедра
+				td Фамилия Имя
+				td 
+			tbody(id="teachers")
+				for str in strs
+					tr
+						td #{str[0]}
+						td
+							a(href = "/7/"+str[3]) #{str[1]} #{str[2]}
+						td
+							buton(class="deletor" style="color: red; display:none" onclick="delTeacher(" + str[3] + ")") (╬◣﹏◢)
+					
+	
+		br
+		table
+			thead
+				td Кафедра
+				td Фамилия
+				td Имя
+				td Телефон
+				td Город
+			tbody
+				td
+					select( id="kaf" )
+						option
+				td
+					input( type="text" id="Firstname")
+				td
+					input( type="text" id="Lastname")
+				td
+					input( type="text" id="telephone")
+				td
+					input( type="text" id="Sity")
+					
+		button(align="center" onclick="addTeacher()") Добавить
+		
+		p
+		a(href="http://localhost:3000/main")
+			button(align="center") На гл.страницу
+			
+			
+script.
+	$( document ).ready(function() {
+		getKafedras();
+	});
+>>>>>>> dccde8bf2870d79e35a7872b88980f4dfb53b140

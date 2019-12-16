@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 html
 	head
 		meta(charset="utf-8")
@@ -70,4 +71,79 @@ html
 		br
 		a(href="http://localhost:3000/main")
 			button(align="center") На гл.страницу
+=======
+html
+	head
+		meta(charset="utf-8")
+
+		title Студенты
+		
+		script(src="/public/scripts/jquery.js")
+		script(src="/public/scripts/ajax.js")
+		script(src="/public/scripts/2.js")
+	body
+		h1 Студенты
+		
+		button(onclick="filtration()") Применить фильтр
+		
+		table(style="border: solid 1px" )
+			thead
+				td 
+					div(id="Facultet")
+						button(onclick="selectFiltr('Facultet')") Факультет
+						div(class="filter" style="display: none")
+						
+				td 
+					div(id="Napravlenie")
+						button(onclick="selectFiltr('Napravlenie')") Направление
+						div(class="filter" style="display: none")
+				td 
+					div(id="Group")
+						button(onclick="selectFiltr('Group')") Группа
+						div(class="filter" style="display: none")
+						
+						
+				td Фамилия Имя
+				td
+			tbody(id="students")
+				for str in strs
+					tr
+						td #{str[0]}
+						td #{str[1]}
+						td #{str[2]}
+						td 
+							a(href = "/5/"+str[5]) #{str[3]} #{str[4]}
+						td
+							buton(class="deletor" style="color: red; display:none" onclick="delStudent(" + str[5] + ")") отчислить (╬◣﹏◢)
+						
+		br
+
+
+		table
+			thead
+				td Группа
+				td Фамилия
+				td Имя
+				td Телефон
+				td Город
+			tbody
+				td
+					select(id="num")
+						option
+				td
+					input( type="text" id="Firstname")
+				td
+					input( type="text" id="Lastname")
+				td
+					input( type="text" id="telephone")
+				td
+					input( type="text" id="Sity")
+		
+		button(onclick="addStudent()") Добавить
+		
+		p
+		br
+		a(href="http://localhost:3000/main")
+			button(align="center") На гл.страницу
+>>>>>>> dccde8bf2870d79e35a7872b88980f4dfb53b140
 			

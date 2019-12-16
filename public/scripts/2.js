@@ -5,7 +5,7 @@ $('document').ready(()=>{
 		(req)=>{
 			let filtr = $('#Facultet').find('.filter');
 			for(let i in req){
-				filtr.append(`<input type="checkbox" checked="checked" value="${req[i]}">${req[i]}<br>`);
+				filtr.append(`<input type="checkbox" checked="checked" value="${req[i][0]}">${req[i][0]}<br>`);
 			}
 		}
 	);
@@ -15,7 +15,7 @@ $('document').ready(()=>{
 		(req)=>{
 			let filtr = $('#Napravlenie').find('.filter');
 			for(let i in req){
-				filtr.append(`<input type="checkbox" checked="checked" value="${req[i]}">${req[i]}<br>`);
+				filtr.append(`<input type="checkbox" checked="checked" value="${req[i][0]}">${req[i][0]}<br>`);
 			}
 		}
 	);
@@ -24,8 +24,13 @@ $('document').ready(()=>{
 		{},
 		(req)=>{
 			let filtr = $('#Group').find('.filter');
+			let grLst = $('#num');
+			
+			grLst.find("option").remove();
+			
 			for(let i in req){
-				filtr.append(`<input type="checkbox" checked="checked" value="${req[i]}">${req[i]}<br>`);
+				filtr.append(`<input type="checkbox" checked="checked" value="${req[i][0]}">${req[i][0]}<br>`);
+				grLst.append(`<option value=${req[i][0]}>${req[i][0]}</option>`);
 			}
 		}
 	);
@@ -60,30 +65,13 @@ function filtration(){
 	);
 }
 
-function startTest(){
-		ajaxPost(
-			"/test",
-			{},
-			(req)=>{alert(req);}
-		);
-}
-
-
-function toStudent(id){
-		ajaxPut(
-			"/toStudent",
-			{id: id},
-			()=>{}
-		);
-}
-
-function delStudent(id){
-		ajaxPost(
-			"/delStudent",
-			{id: id},
-			rewriteTable
-		);
-}
+// function startTest(){
+		// ajaxPost(
+			// "/test",
+			// {},
+			// (req)=>{alert(req);}
+		// );
+// }
 
 function addStudent(){
 	body = {}
@@ -107,6 +95,14 @@ function addStudent(){
 		body,
 		rewriteTable
 	);
+}
+
+function delStudent(id){
+		ajaxPost(
+			"/delStudent",
+			{id: id},
+			rewriteTable
+		);
 }
 
 //Перезапись таблицы со студентами

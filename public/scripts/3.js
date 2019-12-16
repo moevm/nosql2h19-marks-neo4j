@@ -1,19 +1,11 @@
-function startTest(){
-		ajaxPost(
-			"/test",
-			{},
-			(req)=>{alert(req);}
-		);
+function getKafedras(){
+	ajaxPost(
+		"/getKafedras",
+		{},
+		(req)=>{rewriteKafList(req)}
+	);
 }
 
-
-function toTeacher(id){
-		ajaxPut(
-			"/toTeacher",
-			{id: id},
-			()=>{}
-		);
-}
 
 function delTeacher(id){
 		ajaxPost(
@@ -25,7 +17,7 @@ function delTeacher(id){
 
 function addTeacher(){
 	body = {}
-	if ($("#num").val()){body.name = $("#num").val()}
+	if ($("#kaf").val()){body.name = $("#kaf").val()}
 	else {alert("Введи все поля");return;}
 	
 	if ($("#Firstname").val()){body.Firstname = $("#Firstname").val()}
@@ -55,8 +47,18 @@ function rewriteTable(strs){
 		str = strs[i];
 		$("#teachers").append(`<tr>\
 			<td>${str[0]}</td>\
-			<td><a onclick="alert(${str[3]})">${str[1]} ${str[2]}</a></td>\
+			<td><a href="/7/${str[3]}">${str[1]} ${str[2]}</a></td>\
 			<td><button class="deletor" onclick="delTeacher('${str[3]}')">(╬◣﹏◢)</td>\
 		</tr>`);
+	}
+}
+
+//Записать кафедры на выбор(для добавления преподов)
+function rewriteKafList(strs){
+	$("#kaf").find('option').remove();
+	
+	for (let i in strs){
+		str = strs[i];
+		$("#kaf").append(`<option value="${str[0]}">${str[0]}</option>`);
 	}
 }
