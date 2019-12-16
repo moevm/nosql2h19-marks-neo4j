@@ -137,6 +137,26 @@ router.use("/public", express.static('public'));
 	});
 	
 	
+/////////////
+//Страница 7
+	//Запрос на получение предметов, которые ведёт препод
+	router.post("/getLessons", (req, res) =>{
+		db.doGetLessons(res, req.body, classicEnd);
+	});
+	//Запрос на получение предметов, которые может вести препод
+	router.post("/getAnotherLessons", (req, res) =>{
+		db.doGetAnotherLessons(res, req.body, classicEnd);
+	});
+	//Нагрузить препода
+	router.post("/addLessonToTeacher", (req, res) =>{
+		db.doAddLessonToTeacher(res, req.body, classicEnd);
+	});
+	//Разгрузить препода
+	router.post("/dellLessonToTeacher", (req, res) =>{
+		db.doDellLessonToTeacher(res, req.body, classicEnd);
+	});
+
+
 ///////////////////
 //Страница Facultet
 	router.post("/getNapravleniaByFac", (req,res)=>{
@@ -231,7 +251,10 @@ router.use("/public", express.static('public'));
 		db.doGetFacultet(res, {id: req.params.id}, (res, ans)=>{res.render("6", {facultet: ans});});
 	});
 	
-	
+	router.get("/7/:id", (req, res) => {
+		db.do7(res, {id: req.params.id}, (res, ans)=>{res.render("7", {std: ans[0]});});
+	});
+
 	router.get("/facultets", (req, res) => {
 		db.doGetFacultet(res, req.body, (res, ans)=>{res.render("Facultets", {facultets: ans});});
 	});
