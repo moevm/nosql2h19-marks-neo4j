@@ -243,6 +243,37 @@ class Requests{
 	}
 	
 
+////////////
+//Страница 8
+	getTeachAndLess(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (t:Teacher)--(l:Lesson) return l.name,id(t),t.Firstname,t.Lastname;`,
+			res,
+			func
+		);
+	}
+	countAssesementByTeacherOnLesson(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (L:Lesson{name:"${params.lesson}"}) \
+			OPTIONAL MATCH (s:Student)-[h]-(L) WHERE h.teach_id=${params.teacher} return h.assessment, count(h) ORDER BY h.assessment;`,
+			res,
+			func
+		);
+	}
+
+
+////////////
+//Страница 9
+	workloadOnKafedra(res, func = this.standartFinal, params = {}){
+		this.doRequest(
+			`MATCH (K:Kafedra{name:"${params.kafedra}"})--(T:Teacher) \
+			OPTIONAL MATCH (T)--(L:Lesson) RETURN T.Firstname, T.Lastname, count(L);`,
+			res,
+			func
+		);
+	}
+	
+	
 ///////////////////
 //Страница Facultet
 	getFacultetByID(res, func = this.standartFinal, params = {}){

@@ -328,6 +328,83 @@ class Data{
 	}
 
 
+////////////
+//Страница 8
+	doGetTeachAndLess(res, params, end){
+		rq.getTeachAndLess(
+			res,
+			(res, result)=>{end(res, this.parseGetTeachAndLess(result));},
+			params
+		);
+	}
+	parseGetTeachAndLess(result){
+		let ret = [];
+		if (result.records[0]._fields[0]==null){
+			return ret;
+		}
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1].low,
+					`${result.records[i]._fields[2]} ${result.records[i]._fields[3]}`
+				]
+			);
+		}
+		return ret;
+	}
+	doCountAssesementByTeacherOnLesson(res, params, end){
+		rq.countAssesementByTeacherOnLesson(
+			res,
+			(res, result)=>{end(res, this.parseCountAssesementByTeacherOnLesson(result));},
+			params
+		);
+	}
+	parseCountAssesementByTeacherOnLesson(result){
+		let ret = [];
+		if (result.records[0]._fields[0]==null){
+			return ret;
+		}
+		for (let i in result.records){
+			ret.push(
+				[
+					result.records[i]._fields[0],
+					result.records[i]._fields[1].low
+				]
+			);
+		}
+		return ret;
+	}
+	
+	
+////////////
+//Страница 9
+	doWorkloadOnKafedra(res, params, end){
+		rq.workloadOnKafedra(
+			res,
+			(res, result)=>{end(res, this.parseWorkloadOnKafedra(result));},
+			params
+		);
+	}
+	parseWorkloadOnKafedra(result){
+		let ret = [];
+		if (result.records[0]._fields[0]==null){
+			return ret;
+		}
+		for (let i in result.records){
+			ret.push(
+				[
+					`${result.records[i]._fields[0]} ${result.records[i]._fields[1]}`,
+					result.records[i]._fields[2].low,
+					
+				]
+			);
+		}
+		return ret;
+	}
+	
+	
+	
 ///////////////////
 //Страница Facultet
 	doGetFacultetByID(res, params, end){
