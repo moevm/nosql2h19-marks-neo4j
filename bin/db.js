@@ -280,7 +280,7 @@ class Data{
 	do7(res, params, end){
 			rq._7(
 			res,
-			(res, result)=>{end(res, this.parse22(result));},
+			(res, result)=>{end(res, this.parse7(result));},
 			params
 		);
 	}
