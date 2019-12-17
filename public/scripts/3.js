@@ -48,7 +48,7 @@ function rewriteTable(strs){
 		$("#teachers").append(`<tr>\
 			<td>${str[0]}</td>\
 			<td><a href="/7/${str[3]}">${str[1]} ${str[2]}</a></td>\
-			<td><button class="deletor" onclick="delTeacher('${str[3]}')">(╬◣﹏◢)</td>\
+			<td><button class="deletor" onclick="delTeacher('${str[3]}')">Уволить</td>\
 		</tr>`);
 	}
 }

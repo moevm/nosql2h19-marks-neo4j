@@ -116,7 +116,7 @@ function rewriteTable(strs){
 			<td>${str[1]}</td>\
 			<td>${str[2]}</td>\
 			<td><a href="/5/${str[5]}">${str[3]} ${str[4]}</td>\
-			<td><button class="deletor" onclick="delStudent('${str[5]}')">(╬◣﹏◢)</td>\
+			<td><button class="deletor" onclick="delStudent('${str[5]}')">Отчислить</td>\
 		</tr>`);
 	}
 }
