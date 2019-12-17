@@ -197,7 +197,10 @@ router.use("/public", express.static('public'));
 	router.post("/getLessonsByKaf", (req,res)=>{
 		db.doGetLessonsByKaf(res,req.body, classicEnd);
 	});
-	//addLesson -> 23 
+	//Добавление предмета   (+ Страница Kafedra)
+	router.post("/addLesson", (req,res)=>{
+		db.doAddLesson(res,req.body, classicEnd);
+	});
 	router.post("/dellLesson", (req,res)=>{
 		db.doDellLesson(res, req.body, classicEnd)
 	});
