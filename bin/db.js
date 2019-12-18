@@ -710,8 +710,13 @@ class Data{
 		rq.kolNodes = kolNodes;
 		rq.kolRels = kolRels;
 		
-		this.doExport = this._doExport;
-		this.doExport(res, func);
+		if (labels.length){
+			this.doExport = this._doExport;
+			this.doExport(res, func);
+		}
+		else{
+			func(res);
+		}
 	}
 };
 
