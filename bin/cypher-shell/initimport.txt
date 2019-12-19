@@ -1,0 +1,69 @@
+CALL apoc.load.json('http://localhost:3000/initimport') YIELD value
+UNWIND value.nodes AS n
+UNWIND value.relationship as rels
+
+//Добавляем вершины "Факультет"
+FOREACH(f IN n.Facultet  | 
+	MERGE (F:Facultet{id:f.id}) ON CREATE
+    SET F.name=f.properties.name
+)
+//Добавляем вершины "Направление"
+FOREACH(N IN n.Napravlenie  | 
+	MERGE (NN:Napravlenie{id:N.id}) ON CREATE
+    SET NN.name=N.properties.name
+)
+//Добавляем вершины "Группа"
+FOREACH(g IN n.Group  | 
+	MERGE (G:Group{id:g.id}) ON CREATE
+    SET G.num=g.properties.num
+)
+//Добавляем вершины "Студент"
+FOREACH(s IN n.Student  | 
+	MERGE (S:Person:Student{id:s.id}) ON CREATE
+    SET S.Lastname=s.properties.Lastname,
+        S.Firstname=s.properties.Firstname,
+        S.telephone=s.properties.telephone,
+        S.Sity=s.properties.Sity
+)
+//Добавляем вершины "Кафедра"
+FOREACH(k IN n.Kafedra  | 
+	MERGE (K:Kafedra{id:k.id}) ON CREATE
+    SET K.name=k.properties.name
+)
+//Добавляем вершины "Предмет"
+FOREACH(l IN n.Lesson  | 
+	MERGE (L:Lesson{id:l.id}) ON CREATE
+    SET L.name=l.properties.name
+)
+//Добавляем вершины "Препод"
+FOREACH(t IN n.Teacher | 
+	MERGE (T:Person{id:t.id}) ON CREATE
+    SET T.Lastname=t.properties.Lastname,
+        T.Firstname=t.properties.Firstname,
+        T.telephone=t.properties.telephone,
+        T.Sity=t.properties.Sity,
+	T:Teacher
+	ON MATCH SET T:Teacher
+)
+
+FOREACH(r in rels.At |
+    MERGE(n1{id:r.start.id})
+    MERGE(n2{id:r.end.id})
+    MERGE(n1)-[:At]->(n2)
+)
+FOREACH(r in rels.Teach |
+    MERGE(n1{id:r.start.id})
+    MERGE(n2{id:r.end.id})
+    MERGE(n1)-[:Teach]->(n2)
+)
+FOREACH(r in rels.Works |
+    MERGE(n1{id:r.start.id})
+    MERGE(n2{id:r.end.id})
+    MERGE(n1)-[:Works]->(n2)
+)
+FOREACH(r in rels.Has |
+    MERGE(n1{id:r.start.id})
+    MERGE(n2{id:r.end.id})
+    MERGE(n3{id:toString(r.properties.teach_id)})
+    MERGE (n1)-[:Has{assessment:r.properties.assessment, date:r.properties.date, teach_id:id(n3)}]->(n2)
+)

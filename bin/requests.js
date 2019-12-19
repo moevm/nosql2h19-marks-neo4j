@@ -481,6 +481,13 @@ class Requests{
 			func
 		);
 	}
+	doInitImport(res, func = this.standartFinal ){
+		this.doRequest(
+			fs.readFileSync("./bin/cypher-shell/initimport.txt","utf8"),
+			res,
+			func
+		);
+	}
 };
 
 module.exports = new Requests();

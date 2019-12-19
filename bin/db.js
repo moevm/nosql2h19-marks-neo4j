@@ -736,7 +736,7 @@ rq.init(null,(res,result)=>{
 	checker = result.records[0]._fields;
 	if (checker[0].low && checker[1].low)
 		return;
-	rq.doImport(res,(res)=>{
+	rq.doInitImport(res,(res)=>{
 		rq.remCrutchID(res,()=>{})
 	});
 },null);

@@ -48,6 +48,17 @@ router.use("/public", express.static('public'));
 			}
 		});
 	});
+	router.get("/initimport", (req,res)=>{
+		fs.readFile('./data/initimport.json', function(error, data){   
+			if(error){
+				res.statusCode = 404;
+				res.end("Resourse not found!");
+			}   
+			else{
+				res.end(data);
+			}
+		});
+	});
 }
 
 
