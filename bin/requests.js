@@ -473,6 +473,14 @@ class Requests{
 			func
 		);
 	}
+	
+	init(res, func = this.standartFinal){
+		this.doRequest(
+			'MATCH(f:Facultet),(k:Kafedra) return count(f),count(k);',
+			res,
+			func
+		);
+	}
 };
 
 module.exports = new Requests();
