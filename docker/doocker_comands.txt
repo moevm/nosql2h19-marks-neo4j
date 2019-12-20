@@ -1,0 +1,2 @@
+docker build -t trasil/marksdb .
+docker run -p 3000:3000 -it trasil/marksdb
